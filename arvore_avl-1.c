@@ -31,6 +31,10 @@ int maior(int x, int y);
 // function main begins program execution
 int main( int argc, char **argv )
 {
+	time_t start_t, end_t;
+   double diff_t;
+
+  
 	
     unsigned int i; // counter to loop from 1-10
     int item; // variable to hold random values
@@ -49,6 +53,7 @@ int main( int argc, char **argv )
     } // end for
 	int espacos = 0;
     while (1){   
+     	time(&start_t);
     	// traverse the tree inOrder
     	puts( "\n\nA arvore e:" );
     	saidaArvore( rootPtr, espacos );
@@ -62,7 +67,12 @@ int main( int argc, char **argv )
    		} else {
    			printf("Esse numero nao esta na arvore\n");
    		}
+   		time(&end_t);
+   diff_t = difftime(end_t, start_t);
+
+   printf("\nExecution time = %.1f\n", diff_t);
 	}
+	
 } // end main
 
 // insert node into tree
