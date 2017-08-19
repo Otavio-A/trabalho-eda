@@ -1,9 +1,14 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include <time.h>
- 
+
 struct Node{
     int dado;
+    char* nome;
+    char* sobrenome;
+    char* email;
+    char* telefone;
+    float salario;
     struct Node *esquerda;
     struct Node *direita;
     int altura;
@@ -27,9 +32,9 @@ struct Node* newNode(int dado)
 {
     struct Node* node = (struct Node*)
                         malloc(sizeof(struct Node));
-    node->dado   = dado;
-    node->esquerda   = NULL;
-    node->direita  = NULL;
+    node->dado = dado;
+    node->esquerda = NULL;
+    node->direita = NULL;
     node->altura = 1; 
     return(node);
 }
@@ -161,8 +166,7 @@ struct Node* deleteNode(struct Node* root, int dado){
     if (balance > 1 && getBalance(root->esquerda) >= 0)
         return direitaRotate(root);
 
-    if (balance > 1 && getBalance(root->esquerda) < 0)
-    {
+    if (balance > 1 && getBalance(root->esquerda) < 0){
         root->esquerda =  esquerdaRotate(root->esquerda);
         return direitaRotate(root);
     }
@@ -170,8 +174,7 @@ struct Node* deleteNode(struct Node* root, int dado){
     if (balance < -1 && getBalance(root->direita) <= 0)
         return esquerdaRotate(root);
  
-    if (balance < -1 && getBalance(root->direita) > 0)
-    {
+    if (balance < -1 && getBalance(root->direita) > 0){
         root->direita = direitaRotate(root->direita);
         return esquerdaRotate(root);
     }
@@ -179,10 +182,8 @@ struct Node* deleteNode(struct Node* root, int dado){
     return root;
 }
  
-void saidaArvore(struct Node *root)
-{
-    if(root != NULL)
-    {
+void saidaArvore(struct Node *root){
+    if(root != NULL){
     	int i = 0;
     	saidaArvore(root->esquerda);
         printf("%d\n", root->dado);
