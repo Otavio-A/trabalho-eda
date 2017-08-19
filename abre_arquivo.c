@@ -14,19 +14,22 @@ typedef struct informacoes{
 }INFO;
 
 
+
 int main() {
 
     
     FILE* f;
-    char* a;
-    char* b;
-    char* c;
     char linha[100];
 
-    int n1, n2, n3; 
+    int cont;
 
     f = fopen("teste.txt", "r");
+    
+    fscanf(f, "%d", &cont);
+    printf("A quantidade de registros eh: %d\n", cont);
+    
     printf("----------------------------\n");
+    fseek(f, 49, SEEK_SET);         // pula para a linha 3.
 
 
     while((fscanf(f,"%s", linha)) != EOF) {
@@ -36,23 +39,7 @@ int main() {
         tok = strtok(linha, ",");
 
         while(tok != NULL) {
-            //printf("%s\n", tok);
-            //tok = strtok(NULL, ",");
-            //a = tok;
-            //tok = strtok(NULL, ",");
-            //b = tok;
-            //tok = strtok(NULL, ",");
-            //c = tok;
-            //tok = strtok(NULL, ",");
-
-            //sscanf(tok, "%d", &n1);
-            //tok = strtok(NULL, ",");
-            //sscanf(tok, "%d", &n2);
-            //tok = strtok(NULL, ",");
-            //sscanf(tok, "%d", &n3);
-            //tok = strtok(NULL, ",");
-
-
+          
            sscanf(tok, "%d", &(pessoa.matricula));
            tok = strtok(NULL, ",");
 
@@ -81,14 +68,6 @@ int main() {
         printf("-----------------------------\n");
 
     }
-
-
-
-
-
-
-
-
 
 }
 
