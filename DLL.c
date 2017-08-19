@@ -2,19 +2,9 @@
 // Tirado dos site:
 //http://www.geeksforgeeks.org/doubly-linked-list/
 //http://www.geeksforgeeks.org/delete-a-node-in-a-doubly-linked-list/
-
 #include <stdio.h>
 #include <stdlib.h>
-
-typedef struct lista {
-
-	int data;
-	struct lista* proximo;
-	struct lista* anterior;
-
-
-}LISTA;
-
+#include "DLL.h"
 
 // adciona no início
 void push(LISTA** headRef, int newData) {
@@ -139,30 +129,5 @@ int getCount(LISTA* head) {
 }
 
 
-int main() {
 
-
-	LISTA* head = NULL;
-
-	push(&head, 2);
-	push(&head, 4);
-	push(&head, 8);
-	push(&head, 10);
-
-    printf("A LDE original eh: ");
-    printList(head);
-
-
-     
-  	deleteNode(&head, head);
-  	deleteNode(&head, head->proximo);
-  	deleteNode(&head, head->proximo);
-
-  	printf("\nA LDE modificada eh:\n");
-  	printList(head);
-
-    getchar();
-    return 0;
-
-}
 
