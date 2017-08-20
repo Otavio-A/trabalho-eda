@@ -68,15 +68,15 @@ void salvaDados(INFO** headRef, INFO** tailRef) {
 
         }
         
-        if((*headRef )== NULL){
-          (*headRef) = newNode;
-           (*tailRef) = newNode;
-        }
+        //if((*headRef )== NULL){
+          //(*headRef) = newNode;
+           //(*tailRef) = newNode;
+        //}
 
-        else {
-            (*tailRef)->proximo = newNode;
-            (*tailRef) = newNode;
-        }
+        //else {
+          //  (*tailRef)->proximo = newNode;
+            //(*tailRef) = newNode;
+        //}
      
 
     }
@@ -86,7 +86,7 @@ void salvaDados(INFO** headRef, INFO** tailRef) {
 void insereDados() {
 
 
-    char linha[200];
+    char linha[300];
 
     printf("Insira matricula, nome, sobrenome, email, telefone,salario separados por virgula\n");
     scanf("%s", linha);
