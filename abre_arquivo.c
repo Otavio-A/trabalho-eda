@@ -1,74 +1,150 @@
+//referência: http://www.geeksforgeeks.org/fseek-in-c-with-example/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "info.h"
 
-typedef struct informacoes{
+void salvaDados(INFO** headRef, INFO** tailRef) {
 
-    int matricula;
-    char* nome;
-    char* sobrenome;
-    char* email;
-    char* telefone;
-    float salario;
-
-}INFO;
-
-
-
-int main() {
-
-    
     FILE* f;
-    char linha[100];
+    char linha[300];
 
-    int cont;
+    int qtd;
 
     f = fopen("teste.txt", "r");
-    
-    fscanf(f, "%d", &cont);
-    printf("A quantidade de registros eh: %d\n", cont);
-    
-    printf("----------------------------\n");
-    fseek(f, 49, SEEK_SET);         // pula para a linha 3.
 
+    if(f == NULL){
+        printf("Desculpa, banco de dados indisponível\n");
+        exit(0);
+    }
 
-    while((fscanf(f,"%s", linha)) != EOF) {
-        INFO pessoa;
+    fscanf(f, "%d", &qtd);
+    printf("A quantidade de registros eh:%d\n", qtd);
+        
+     // O fseek faz com que a barra se seleção pule para local indicado;
+     //Nesses caso, a barra irá pular 49 bytes a partir da linha inicial(SEEK_SET);    
+    fseek(f, 52, SEEK_SET);
+    
+    for(int i = 0; i < qtd; i++) {
+
+        INFO* newNode = malloc(sizeof(INFO));
+
+        if(newNode == NULL){
+            printf("Memoria indisponível.\n");
+            exit(0);
+        }
+         
+         newNode->proximo = NULL;   
+
+         fgets(linha, 120, f);
+
 
         char* tok;
         tok = strtok(linha, ",");
 
         while(tok != NULL) {
           
-           sscanf(tok, "%d", &(pessoa.matricula));
+           sscanf(tok, "%d", &(newNode->matricula));
            tok = strtok(NULL, ",");
 
-           pessoa.nome = tok;
-           tok = strtok(NULL, ",");
-           pessoa.sobrenome = tok;
-           tok = strtok(NULL, ",");
-           pessoa.email = tok;
-           tok = strtok(NULL, ",");
-           pessoa.telefone = tok;
+           newNode->nome = malloc(sizeof(tok)*10);
+           strcpy(newNode->nome, tok);
            tok = strtok(NULL, ",");
 
-           sscanf(tok, "%f", &(pessoa.salario));
+           newNode->sobrenome = malloc(sizeof(tok)*10);
+           strcpy(newNode->sobrenome, tok);
+           tok = strtok(NULL, ",");
+
+           newNode->email = malloc(sizeof(tok)*10);
+           strcpy(newNode->email, tok);
+           tok = strtok(NULL, ",");
+
+           newNode->telefone = malloc(sizeof(tok)*10);
+           strcpy(newNode->telefone, tok);
+           tok = strtok(NULL, ",");
+
+           sscanf(tok, "%f", &(newNode->salario));
            tok = strtok(NULL, ",");
 
         }
+        
+        if((*headRef )== NULL){
+          (*headRef) = newNode;
+           (*tailRef) = newNode;
+        }
 
-        printf("Matricula:%d\n", pessoa.matricula);
-        printf("Nome:%s\n", pessoa.nome);
-        printf("Sobrenome:%s\n", pessoa.sobrenome);
-        printf("Email:%s\n", pessoa.email);
-        printf("Telefone:%s\n", pessoa.telefone);
-        printf("Salario:%.2f\n", pessoa.salario);
-
-
-        printf("-----------------------------\n");
+        else {
+            (*tailRef)->proximo = newNode;
+            (*tailRef) = newNode;
+        }
+     
 
     }
+  
+}
+
+void insereDados() {
+
+
+    char linha[200];
+
+    printf("Insira matricula, nome, sobrenome, email, telefone,salario separados por virgula\n");
+    scanf("%s", linha);
+
+    FILE* f;
+
+    f = fopen("teste.txt", "r+");
+
+    if(f == NULL){
+        printf("Desculpa, banco de dados indisponível\n");
+        exit(0);
+    }
+
+    int qtd;
+    fscanf(f, "%d", &qtd);
+    qtd++;
+
+    fseek(f, 0, SEEK_SET);
+    fprintf(f, "%d", qtd);
+
+    fseek(f, 0, SEEK_END);
+    fprintf(f, "%s", linha);
+
+    fclose(f);
 
 }
 
+void imprimeDados(INFO* curPtr) {
+
+    printf("Dados atuais:\n");
+
+    while(curPtr != NULL) {
+
+        printf("--------------------------------------\n");
+
+        printf("Matricula: %d\n", curPtr->matricula);
+        printf("Nome: %s\n", curPtr->nome);
+        printf("Sobrenome: %s\n", curPtr->sobrenome);
+        printf("Email: %s\n", curPtr->email);
+        printf("Telefone: %s\n", curPtr->telefone);
+        printf("Salario: %.2f\n", curPtr->salario);
+
+        curPtr = curPtr->proximo;
+
+    }
+    printf("\n");
+
+}
+
+
+int main() {
+
+    INFO* ini = NULL, *fim = NULL;
+    fim = ini;
+
+    salvaDados(&ini, &fim);
+
+    imprimeDados(ini);
+
+}
 
