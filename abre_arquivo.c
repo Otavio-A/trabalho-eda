@@ -159,20 +159,119 @@ void buscaPelaMatricula(LISTA* node) {
 
 }
 
+void deletaMatricula(LISTA** headRef) {
 
-int main() {
+  LISTA* node = (*headRef);
 
-  LISTA* head = NULL;
-  char arquivo[20];
+  int key;
+  printf("Digite a matricula que deseja deletar: ");
+  scanf("%d", &key);
 
-  printf("Digite o nome do arquivo e sua extensao: ");
-  scanf("%s", arquivo);
+  while(node != NULL) {
 
-    importaRegistro(&head, arquivo);
-    printList(head);
+    if(node->pessoa.matricula == key){
+      deleteNode(headRef, node);
+      printf("Foi deletado.\n");
+      return;
+    }
 
-    buscaPeloNome(head);
-    buscaPelaMatricula(head);
+    node = node->proximo;
+
+
+  }
+
+  printf("%d nao existe nos registros.\n", key);
+  return;
 
 }
 
+
+LISTA* criaNovoNo() {
+
+
+  LISTA* newNode = malloc(sizeof(LISTA));
+
+  if(newNode == NULL){
+    printf("Memoria indisponível.\n");
+    exit(0);
+  }
+
+    int matricula;
+    printf("Matricula: ");
+    scanf("%d", &(newNode->pessoa.matricula));
+    getchar();
+
+    char nome[20];
+    printf("Nome: ");
+    fgets(nome, 20, stdin);
+    nome[strcspn(nome, "\n")] = 0;
+    newNode->pessoa.nome = malloc(sizeof(nome)*10);
+    strcpy(newNode->pessoa.nome,nome);
+
+    char sobrenome[20];
+    printf("Sobrenome: ");
+    fgets(sobrenome, 20, stdin);
+    sobrenome[strcspn(sobrenome, "\n")] = 0;
+    newNode->pessoa.sobrenome = malloc(sizeof(sobrenome)*10);
+    strcpy(newNode->pessoa.sobrenome,sobrenome);
+
+
+    char email[30];
+    printf("Email: ");
+    fgets(email, 30, stdin);
+    email[strcspn(email, "\n")] = 0;
+    newNode->pessoa.email = malloc(sizeof(email)*10);
+    strcpy(newNode->pessoa.email,email);
+
+    char telefone[18];
+    printf("Telefone: ");
+    fgets(telefone, 18, stdin);
+    telefone[strcspn(telefone, "\n")] = 0;
+    newNode->pessoa.telefone = malloc(sizeof(telefone)*10);
+    strcpy(newNode->pessoa.telefone,telefone);
+
+    float salario;
+    printf("Salario: ");
+    scanf("%f", &(newNode->pessoa.salario));
+
+    return newNode;
+
+}
+
+
+void insereOrdenado(LISTA** headRef){
+
+  LISTA* curPtr = (*headRef);
+  LISTA* newNode = criaNovoNo();
+
+
+  while(curPtr != NULL) {
+
+    if(newNode->pessoa.matricula == curPtr->pessoa.matricula){
+      printf("Ja existe um registro com essa matricula\n");
+      return;
+    }
+
+    curPtr = curPtr->proximo;
+
+  }
+
+  curPtr = (*headRef);
+
+  while(curPtr != NULL) {
+
+    if(curPtr->pessoa.matricula > newNode->pessoa.matricula) {
+      insertAfter(curPtr->anterior, newNode);
+      return;
+    }
+
+    curPtr = curPtr->proximo;
+
+  }
+
+
+  append(headRef, newNode);
+  return;
+
+
+}
