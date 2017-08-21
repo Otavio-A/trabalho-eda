@@ -1,20 +1,9 @@
-#include<stdio.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <time.h>
+#include <string.h>
+#include "trabalho_avl.h"
 
-struct Node{
-    int dado;
-    char* nome;
-    char* sobrenome;
-    char* email;
-    char* telefone;
-    float salario;
-    struct Node *esquerda;
-    struct Node *direita;
-    int altura;
-};
- 
-int max(int a, int b);
  
 int altura(struct Node *N)
 {
@@ -27,22 +16,22 @@ int max(int a, int b)
 {
     return (a > b)? a : b;
 }
- 
-struct Node* newNode(int dado)
+/* 
+ARVORE* newNode()
 {
-    struct Node* node = (struct Node*)
-                        malloc(sizeof(struct Node));
-    node->dado = dado;
+    ARVORE* node = (ARVORE*)malloc(sizeof(ARVORE));
+
+   node->dado = dado;
     node->esquerda = NULL;
     node->direita = NULL;
     node->altura = 1; 
     return(node);
 }
- 
-struct Node *direitaRotate(struct Node *y)
+ */
+ARVORE *direitaRotate(ARVORE *y)
 {
-    struct Node *x = y->esquerda;
-    struct Node *T2 = x->direita;
+    ARVORE *x = y->esquerda;
+    ARVORE *T2 = x->direita;
  
     x->direita = y;
     y->esquerda = T2;
@@ -53,10 +42,10 @@ struct Node *direitaRotate(struct Node *y)
     return x;
 }
  
-struct Node *esquerdaRotate(struct Node *x)
+ARVORE *esquerdaRotate(ARVORE *x)
 {
-    struct Node *y = x->direita;
-    struct Node *T2 = y->esquerda;
+    ARVORE *y = x->direita;
+    ARVORE *T2 = y->esquerda;
  
     y->esquerda = x;
     x->direita = T2;
@@ -67,53 +56,66 @@ struct Node *esquerdaRotate(struct Node *x)
     return y;
 }
  
-int getBalance(struct Node *N)
+int getBalance(ARVORE *N)
 {
     if (N == NULL)
         return 0;
     return altura(N->esquerda) - altura(N->direita);
 }
  
-struct Node* insert(struct Node* node, int dado)
-{
-    if (node == NULL)
-        return(newNode(dado));
- 
-    if (dado < node->dado)
-        node->esquerda  = insert(node->esquerda, dado);
-    else if (dado > node->dado)
-        node->direita = insert(node->direita, dado);
+ARVORE* insert(ARVORE** node, ARVORE* newNode)
+{ 
+    
+    int novoDado = newNode->pessoa.matricula;
+
+    if ((*node) == NULL){
+
+       newNode->esquerda = NULL;
+       newNode->direita = NULL;
+       newNode->altura = 1;
+       (*node) = newNode;
+
+       return (*node);
+
+
+    }
+        
+
+    if (novoDado < (*node)->pessoa.matricula)
+        (*node)->esquerda  = insert(&((*node)->esquerda), newNode);
+    else if (novoDado > (*node)->pessoa.matricula)
+        (*node)->direita = insert(&((*node)->direita), newNode);
     else
-        return node;
+        return (*node);
 
-    node->altura = 1 + max(altura(node->esquerda),
-                           altura(node->direita));
+    (*node)->altura = 1 + max(altura((*node)->esquerda),
+                           altura((*node)->direita));
 
-    int balance = getBalance(node);
+    int balance = getBalance((*node));
 
-    if (balance > 1 && dado < node->esquerda->dado)
-        return direitaRotate(node);
-    if (balance < -1 && dado > node->direita->dado)
-        return esquerdaRotate(node);
+    if (balance > 1 && novoDado < (*node)->esquerda->pessoa.matricula)
+        return direitaRotate((*node));
+    if (balance < -1 && novoDado > (*node)->direita->pessoa.matricula)
+        return esquerdaRotate((*node));
  
-    if (balance > 1 && dado > node->esquerda->dado)
+    if (balance > 1 && novoDado > (*node)->esquerda->pessoa.matricula)
     {
-        node->esquerda =  esquerdaRotate(node->esquerda);
-        return direitaRotate(node);
+        (*node)->esquerda =  esquerdaRotate((*node)->esquerda);
+        return direitaRotate((*node));
     }
  
-    if (balance < -1 && dado < node->direita->dado)
+    if (balance < -1 && novoDado < (*node)->direita->pessoa.matricula)
     {
-        node->direita = direitaRotate(node->direita);
-        return esquerdaRotate(node);
+        (*node)->direita = direitaRotate((*node)->direita);
+        return esquerdaRotate((*node));
     }
  
-    return node;
+    return (*node);
 }
 
-struct Node * minValueNode(struct Node* node)
+ARVORE * minValueNode(ARVORE* node)
 {
-    struct Node* atual = node;
+    ARVORE* atual = node;
 
     while (atual->esquerda != NULL)
         atual = atual->esquerda;
@@ -121,21 +123,22 @@ struct Node * minValueNode(struct Node* node)
     return atual;
 }
   
-struct Node* deleteNode(struct Node* root, int dado){
+ARVORE* deleteTreeNode(ARVORE* root, int matricula){
+    
     if (root == NULL)
         return root;
         
         
         
-    if ( dado < root->dado )
-        root->esquerda = deleteNode(root->esquerda, dado);
+    if ( matricula < root->pessoa.matricula )
+        root->esquerda = deleteTreeNode(root->esquerda, matricula);
  
-    else if( dado > root->dado )
-        root->direita = deleteNode(root->direita, dado);
+    else if( matricula > root->pessoa.matricula )
+        root->direita = deleteTreeNode(root->direita, matricula);
  
     else{
         if( (root->esquerda == NULL) || (root->direita == NULL) ){
-            struct Node *temp = root->esquerda ? root->esquerda :
+            ARVORE *temp = root->esquerda ? root->esquerda :
                                              root->direita;
  
             if (temp == NULL){
@@ -148,11 +151,11 @@ struct Node* deleteNode(struct Node* root, int dado){
         }
         else
         {
-            struct Node* temp = minValueNode(root->direita);
+            ARVORE* temp = minValueNode(root->direita);
  
-            root->dado = temp->dado;
+            root->pessoa.matricula = temp->pessoa.matricula;
  
-            root->direita = deleteNode(root->direita, temp->dado);
+            root->direita = deleteTreeNode(root->direita, temp->pessoa.matricula);
         }
     }
  
@@ -183,103 +186,80 @@ struct Node* deleteNode(struct Node* root, int dado){
     return root;
 }
  
-void busca_mat(struct Node* root, int dado){
-int x;
+void busca_mat(ARVORE* root, int key){
+    
     if (root == NULL){
-    	puts ("Nao Encontrado!");
+    	puts ("Essa matricula não existe nos registros.");
+        return;
 	}
-    else if ( dado < root->dado ){
-    busca_mat(root->esquerda, dado);
+    else if ( key < root->pessoa.matricula ){
+        busca_mat(root->esquerda, key);
 	}
         
-    else if( dado > root->dado ){
-    busca_mat(root->direita, dado);
+    else if( key > root->pessoa.matricula ){
+        busca_mat(root->direita, key);
 	}
-    else if (dado == root->dado){
-    	puts ("Encontrado!");
-    	printf ("- %d\n", root->dado);
+    else if (key == root->pessoa.matricula){
+    	printf("O resgitro correspondente a matricula %d eh:\n", key);
+    	exibeRegistroTree(root);
+        return;
 	}
-	else {
-		puts ("Nao Encontrado!");
-	}	
 }
 
-/*void busca_nome(struct Node* root, char* nome){
-int x;
+void busca_nome(ARVORE* root, char key[]){
+
     if (root == NULL){
-    	puts ("Nao Encontrado!");
+    	puts ("Esse nome nao existe nos registros.");
     	return;
 	}
-    busca_nome(root->esquerda, nome);
-    if (nome == root->nome){
-    	puts ("Encontrado!");
-    	return;
-    }
-    busca_nome(root->direita, nome);
-    
-	
-}*/
-  
-void saidaArvore(struct Node *root){
+
+    else if ( strcmp(root->pessoa.nome, key) > 0 ){
+        busca_nome(root->esquerda, key);
+	}
+        
+    else if( strcmp(root->pessoa.nome, key) < 0){
+        busca_nome(root->direita, key);
+	}
+    else if (strcmp(root->pessoa.nome, key) == 0){
+    	printf("Os dados de %s sao:\n", key);
+        exibeRegistroTree(root);
+        return;
+	}
+}
+
+void ListaArvore(ARVORE *root){
     if(root != NULL){
-    	int i = 0;
-    	saidaArvore(root->esquerda);
-        printf("%d\n", root->dado);
-        saidaArvore(root->direita);
+    	ListArvore(root->esquerda);
+        
+        exibeRegistroTree(root);
+
+        ListArvore(root->direita);
     }
 }
  
 int main(){
-  int a;
-  time_t start_del, end_del, start_ins, end_ins;
-  double diff_t, diff_t2;
-  int i;
-  int item, escolha;
-  char* nome_busca;
-  struct Node *root = NULL;
-  time(&start_ins);
-	srand( time( NULL ) );
-	puts ("Os elementos sao:");
-  	for ( i = 1; i <= 20; ++i ) {
-        item = rand() % 100;
-        printf( "%d ", item );
-        root = insert(root, item );
-    }
-    time(&end_ins);
-    diff_t2 = difftime(end_ins, start_ins);
-    printf("\nTempo de Insercao = %.1f\n", diff_t2);
-    for ( ; ; ){
-	    printf ("O que deseja fazer?\n(1) - Importar registros atraves do arquivo\n(2) - Exibir registros por ordem de matricula\n(3) - Buscar registro por nome\n(4) - Buscar registro por matricula\n(5) - Inserir novo registo\n(6) - Remover registro\n");
-	    scanf ("%d", &escolha);
-	    if (escolha == 1){
-	    	puts ("Digite o nome do arquivo");
-		}
-		else if (escolha == 2){
-			puts ("-----------------o------------------");
-			saidaArvore (root);
-			puts ("-----------------o------------------");
-		}
-		else if (escolha == 3){
-			puts ("Digite o nome que deseja buscar:");
-			//scanf ("%s", &nome_busca);
-	    	//busca_nome (root, nome_busca);
-		}
-		else if (escolha == 4){
-			puts ("Digite a matricula que deseja buscar:");
-			scanf ("%d", &a);
-	    	busca_mat (root, a);
-		}
-		else if (escolha == 5){
-			puts ("Digite as informacoes para inserir:\n1 - Matricula\n2 - Nome\n3 - Sobrenome\n4 - Email\n5 - Telefone\n6 - Salario");
-		}
-		else if (escolha == 6){   
-	      	time(&start_del);
-	    	printf ("Digite a matricula que deseja remover o registro!\n");
-	    	scanf ("%d", &a);
-	    	root = deleteNode (root, a);
-	    	time(&end_del);
-	    	diff_t = difftime(end_del, start_del);
-	    	printf("Tempo de Delecao = %.1f\n", diff_t);
-	 	}
-	}
+
+    ARVORE* root = NULL;
+    char arquivo[20];
+
+    printf("Digite o nome do arquivo: ");
+    scanf("%s", arquivo);
+
+    importaRegistroParaArvore(&root, arquivo);
+    ListArvore(root);
+
+    //printf("\nDigite o nome que esta buscando: ");
+    //char nome[20];
+    //scanf("%s", nome);
+
+    //busca_nome(root, nome);
+
+    printf("\nDigite a matricula que esta procurando: ");
+    int matricula;
+    scanf("%d", &matricula);
+
+    busca_mat(root, matricula);
+
+
+
 }
