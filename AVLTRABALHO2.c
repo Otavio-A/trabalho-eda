@@ -197,6 +197,7 @@ int x;
 	}
     else if (dado == root->dado){
     	puts ("Encontrado!");
+    	printf ("- %d\n", root->dado);
 	}
 	else {
 		puts ("Nao Encontrado!");
