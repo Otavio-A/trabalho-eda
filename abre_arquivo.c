@@ -2,16 +2,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "info.h"
+#include "structs.h"
 
-void salvaDados(INFO** headRef, INFO** tailRef) {
+void importaRegistro(LISTA** headRef, char arquivo[]) {
 
     FILE* f;
     char linha[300];
 
     int qtd;
+    int auxiliar = 47;
 
-    f = fopen("teste.txt", "r");
+    f = fopen(arquivo, "r");
 
     if(f == NULL){
         printf("Desculpa, banco de dados indisponível\n");
@@ -19,15 +20,29 @@ void salvaDados(INFO** headRef, INFO** tailRef) {
     }
 
     fscanf(f, "%d", &qtd);
+
+    // diz quantas linhas deve saltar.
+    if(qtd < 10) 
+      auxiliar += 3;
+    else if(qtd >= 10 && qtd < 100)
+      auxiliar += 4;
+    else if(qtd >= 100 && qtd < 1000)
+      auxiliar += 5;
+    else if(qtd >= 1000 && qtd < 10000)
+      auxiliar += 6;
+    else if(qtd >= 10000)
+      auxiliar += 7;
+
+
     printf("A quantidade de registros eh:%d\n", qtd);
         
      // O fseek faz com que a barra se seleção pule para local indicado;
      //Nesses caso, a barra irá pular 49 bytes a partir da linha inicial(SEEK_SET);    
-    fseek(f, 52, SEEK_SET);
+    fseek(f, auxiliar, SEEK_SET);
     
     for(int i = 0; i < qtd; i++) {
 
-        INFO* newNode = malloc(sizeof(INFO));
+        LISTA* newNode = malloc(sizeof(LISTA));
 
         if(newNode == NULL){
             printf("Memoria indisponível.\n");
@@ -44,107 +59,120 @@ void salvaDados(INFO** headRef, INFO** tailRef) {
 
         while(tok != NULL) {
           
-           sscanf(tok, "%d", &(newNode->matricula));
+           sscanf(tok, "%d", &((newNode->pessoa).matricula));
            tok = strtok(NULL, ",");
 
-           newNode->nome = malloc(sizeof(tok)*10);
-           strcpy(newNode->nome, tok);
+           (newNode->pessoa).nome = malloc(sizeof(tok)*10);
+           strcpy((newNode->pessoa).nome, tok);
            tok = strtok(NULL, ",");
 
-           newNode->sobrenome = malloc(sizeof(tok)*10);
-           strcpy(newNode->sobrenome, tok);
+           (newNode->pessoa).sobrenome = malloc(sizeof(tok)*10);
+           strcpy((newNode->pessoa).sobrenome, tok);
            tok = strtok(NULL, ",");
 
-           newNode->email = malloc(sizeof(tok)*10);
-           strcpy(newNode->email, tok);
+           (newNode->pessoa).email = malloc(sizeof(tok)*10);
+           strcpy((newNode->pessoa).email, tok);
            tok = strtok(NULL, ",");
 
-           newNode->telefone = malloc(sizeof(tok)*10);
-           strcpy(newNode->telefone, tok);
+           (newNode->pessoa).telefone = malloc(sizeof(tok)*10);
+           strcpy((newNode->pessoa).telefone, tok);
            tok = strtok(NULL, ",");
 
-           sscanf(tok, "%f", &(newNode->salario));
+           sscanf(tok, "%f", &((newNode->pessoa).salario));
            tok = strtok(NULL, ",");
 
         }
-        
-        //if((*headRef )== NULL){
-          //(*headRef) = newNode;
-           //(*tailRef) = newNode;
-        //}
 
-        //else {
-          //  (*tailRef)->proximo = newNode;
-            //(*tailRef) = newNode;
-        //}
+        append(headRef, newNode);
      
 
     }
   
 }
 
-void insereDados() {
+void exibeRegistro(LISTA* curPtr) {
 
 
-    char linha[300];
+    printf("--------------------------------------\n");
 
-    printf("Insira matricula, nome, sobrenome, email, telefone,salario separados por virgula\n");
-    scanf("%s", linha);
-
-    FILE* f;
-
-    f = fopen("teste.txt", "r+");
-
-    if(f == NULL){
-        printf("Desculpa, banco de dados indisponível\n");
-        exit(0);
-    }
-
-    int qtd;
-    fscanf(f, "%d", &qtd);
-    qtd++;
-
-    fseek(f, 0, SEEK_SET);
-    fprintf(f, "%d", qtd);
-
-    fseek(f, 0, SEEK_END);
-    fprintf(f, "%s", linha);
-
-    fclose(f);
+    printf("Matricula: %d\n", curPtr->pessoa.matricula);
+    printf("Nome: %s\n", curPtr->pessoa.nome);
+    printf("Sobrenome: %s\n", curPtr->pessoa.sobrenome);
+    printf("Email: %s\n", curPtr->pessoa.email);
+    printf("Telefone: %s\n", curPtr->pessoa.telefone);
+    printf("Salario: %.2f\n", curPtr->pessoa.salario);
+    
 
 }
 
-void imprimeDados(INFO* curPtr) {
+void buscaPeloNome(LISTA* node) {
 
-    printf("Dados atuais:\n");
+  char key[10];
 
-    while(curPtr != NULL) {
+  printf("Digite o nome que esta procurando: ");
+  scanf("%s", key);
 
-        printf("--------------------------------------\n");
+  while(node != NULL){
 
-        printf("Matricula: %d\n", curPtr->matricula);
-        printf("Nome: %s\n", curPtr->nome);
-        printf("Sobrenome: %s\n", curPtr->sobrenome);
-        printf("Email: %s\n", curPtr->email);
-        printf("Telefone: %s\n", curPtr->telefone);
-        printf("Salario: %.2f\n", curPtr->salario);
+    if(strcmp((node->pessoa).nome, key) == 0){
 
-        curPtr = curPtr->proximo;
+      printf("Os dados de %s sao:\n", node->pessoa.nome);
+      exibeRegistro(node);
 
+      return;
+    
     }
-    printf("\n");
+
+      node = node->proximo; 
+
+  }
+
+  printf("%s nao existe nos registros.\n", key);
+  return;
+
+}
+
+
+void buscaPelaMatricula(LISTA* node) {
+
+  int key;
+
+  printf("\nDigite a matricula que esta procurando: ");
+  scanf("%d", &key);
+
+  while(node != NULL){
+
+    if(node->pessoa.matricula == key){
+      
+      printf("Os dados de %d sao:\n", node->pessoa.matricula);
+      exibeRegistro(node);
+
+      return;
+    }
+
+    node = node->proximo;
+
+  }
+
+  printf("%d nao existe nos registros.\n", node->pessoa.matricula);
+  return;
 
 }
 
 
 int main() {
 
-    INFO* ini = NULL, *fim = NULL;
-    fim = ini;
+  LISTA* head = NULL;
+  char arquivo[20];
 
-    salvaDados(&ini, &fim);
+  printf("Digite o nome do arquivo e sua extensao: ");
+  scanf("%s", arquivo);
 
-    imprimeDados(ini);
+    importaRegistro(&head, arquivo);
+    printList(head);
+
+    buscaPeloNome(head);
+    buscaPelaMatricula(head);
 
 }
 
