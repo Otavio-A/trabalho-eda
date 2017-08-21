@@ -25,9 +25,13 @@ typedef struct lista {
 }LISTA;
 
 
-void importaRegistro(LISTA** headRef);
-void insereDados();
-
+void importaRegistro(LISTA** headRef, char arquivo[]);
+void exibeRegistro(LISTA* node);
+void deletaMatricula(LISTA** headRef);
+void buscaPelaMatricula(LISTA* node);
+void buscaPeloNome(LISTA* node);
+void insereOrdenado(LISTA** headRef);
+LISTA* criaNovoNo();
 
 void push(LISTA** headRef, LISTA* newNode);
 void insertAfter(LISTA* prevNode, LISTA* newNode);
