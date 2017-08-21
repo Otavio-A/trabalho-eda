@@ -208,21 +208,16 @@ int x;
 int x;
     if (root == NULL){
     	puts ("Nao Encontrado!");
-    	return 0;
+    	return;
 	}
-    else if ( nome < root->nome ){
     busca_nome(root->esquerda, nome);
-	}
-        
-    else if( nome> root->nome ){
-    busca_nome(root->direita, nome);
-	}
-    else if (nome == root->nome){
+    if (nome == root->nome){
     	puts ("Encontrado!");
-	}
-	else {
-		puts ("Nao Encontrado!");
-	}	
+    	return;
+    }
+    busca_nome(root->direita, nome);
+    
+	
 }*/
   
 void saidaArvore(struct Node *root){
