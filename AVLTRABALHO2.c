@@ -249,6 +249,13 @@ int main(){
 		}
 		else if (escolha == 6){   
 	    	printf ("Digite a matricula que deseja remover o registro!\n");
+   			int matricula;
+    		scanf("%d", &matricula);
+    		time(&start);
+			root = deleteTreeNode(root, matricula);
+			time(&end);
+		    diff_t = difftime(end, start);
+		    printf ("Tempo de Remocao %f\n", diff_t);
 	 	}
 	}
 
