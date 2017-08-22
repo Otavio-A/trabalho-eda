@@ -225,10 +225,10 @@ int main(){
 		    printf ("Tempo de Exibicao %f\n", diff_t);
 		}
 		else if (escolha == 3){
-			time(&start);
 			puts ("Digite o nome que deseja buscar:");
 			char nome[50];
     		scanf("%s", &nome);
+    		time(&start);
 			buscaNome(root, nome);
 			time(&end);
 		    diff_t = difftime(end, start);
@@ -238,7 +238,11 @@ int main(){
 			printf("\nDigite a matricula que esta procurando: ");
    			int matricula;
     		scanf("%d", &matricula);
+    		time(&start);
 			buscaMatricula(root, matricula);
+			time(&end);
+		    diff_t = difftime(end, start);
+		    printf ("Tempo de Busca %f\n", diff_t);
 		}
 		else if (escolha == 5){
 			puts ("Digite as informacoes para inserir:\n1 - Matricula\n2 - Nome\n3 - Sobrenome\n4 - Email\n5 - Telefone\n6 - Salario");
