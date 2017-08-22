@@ -20,6 +20,7 @@ int max(int a, int b)
 ARVORE* newNode()
 {
     ARVORE* node = (ARVORE*)malloc(sizeof(ARVORE));
+
    node->dado = dado;
     node->esquerda = NULL;
     node->direita = NULL;
@@ -84,8 +85,8 @@ ARVORE* insert(ARVORE** node, ARVORE* newNode)
         (*node)->esquerda  = insert(&((*node)->esquerda), newNode);
     else if (novoDado > (*node)->pessoa.matricula)
         (*node)->direita = insert(&((*node)->direita), newNode);
-    else
-        return (*node);
+    //else
+      //  return (*node);
 
     (*node)->altura = 1 + max(altura((*node)->esquerda),
                            altura((*node)->direita));
@@ -199,65 +200,35 @@ void imprimeArvore(ARVORE *root){
 }
  
 int main(){
-	int escolha;
+
     ARVORE* root = NULL;
     char arquivo[20];
-	for ( ; ; ){
-		time_t start, end;
-		double diff_t;
-	    printf ("O que deseja fazer?\n(1) - Importar registros atraves do arquivo\n(2) - Exibir registros por ordem de matricula\n(3) - Buscar registro por nome\n(4) - Buscar registro por matricula\n(5) - Inserir novo registo\n(6) - Remover registro\n");
-	    scanf ("%d", &escolha);
-	    if (escolha == 1){
-	    	printf("Digite o nome do arquivo: ");
-		    scanf("%s", arquivo);
-			time(&start);
-		    importaRegistroParaArvore(&root, arquivo);
-		    time(&end);
-		    diff_t = difftime(end, start);
-		    printf ("Tempo de Importacao %f\n", diff_t);
-		}
-		else if (escolha == 2){
-			time(&start);
-			imprimeArvore(root);
-			puts ("-----------------o------------------");
-			time(&end);
-		    diff_t = difftime(end, start);
-		    printf ("Tempo de Exibicao %f\n", diff_t);
-		}
-		else if (escolha == 3){
-			puts ("Digite o nome que deseja buscar:");
-			char nome[50];
-    		scanf("%s", &nome);
-    		time(&start);
-			buscaNome(root, nome);
-			time(&end);
-		    diff_t = difftime(end, start);
-		    printf ("Tempo de Busca %f\n", diff_t);
-		}
-		else if (escolha == 4){
-			printf("\nDigite a matricula que esta procurando: ");
-   			int matricula;
-    		scanf("%d", &matricula);
-    		time(&start);
-			buscaMatricula(root, matricula);
-			time(&end);
-		    diff_t = difftime(end, start);
-		    printf ("Tempo de Busca %f\n", diff_t);
-		}
-		else if (escolha == 5){
-			puts ("Digite as informacoes para inserir:\n1 - Matricula\n2 - Nome\n3 - Sobrenome\n4 - Email\n5 - Telefone\n6 - Salario");
-		}
-		else if (escolha == 6){   
-	    	printf ("Digite a matricula que deseja remover o registro!\n");
-   			int matricula;
-    		scanf("%d", &matricula);
-    		time(&start);
-    		buscaMatricula(root, matricula);
-			root = deleteTreeNode(root, matricula);
-			time(&end);
-		    diff_t = difftime(end, start);
-		    printf ("Tempo de Remocao %f\n", diff_t);
-	 	}
-	}
+
+    printf("Digite o nome do arquivo: ");
+    scanf("%s", arquivo);
+
+    importaRegistroParaArvore(&root, arquivo);
+    imprimeArvore(root);
+
+    //printf("\nDigite o nome que esta buscando: ");
+    //char nome[20];
+    //scanf("%s", nome);
+
+    //buscaNome(root, nome);
+
+    //printf("\nDigite a matricula que esta procurando: ");
+    //int matricula;
+    //scanf("%d", &matricula);
+
+   //buscaMatricula(root, matricula);
+
+    printf("\nDigite os dados do novo registro que deseja inserir\n");
+    insereOrdenadoNaArvore(&root);
+
+    imprimeArvore(root);
+
+    //imprimeArvore(root);
+
+
 
 }
