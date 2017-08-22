@@ -1,4 +1,3 @@
-//referência: http://www.geeksforgeeks.org/fseek-in-c-with-example/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -15,7 +14,7 @@ void importaRegistroParaArvore(ARVORE** root, char arquivo[]) {
     f = fopen(arquivo, "r");
 
     if(f == NULL){
-        printf("Desculpa, banco de dados indisponível\n");
+        printf("Desculpa, banco de dados indisponivel\n");
         exit(0);
     }
 
@@ -36,8 +35,8 @@ void importaRegistroParaArvore(ARVORE** root, char arquivo[]) {
 
     printf("A quantidade de registros eh:%d\n", qtd);
         
-     // O fseek faz com que a barra se seleção pule para local indicado;
-     //Nesses caso, a barra irá pular 49 bytes a partir da linha inicial(SEEK_SET);    
+     // O fseek faz com que a barra se sele��o pule para local indicado;
+     //Nesses caso, a barra ir� pular 49 bytes a partir da linha inicial(SEEK_SET);    
     fseek(f, auxiliar, SEEK_SET);
     
     for(int i = 0; i < qtd; i++) {
@@ -45,7 +44,7 @@ void importaRegistroParaArvore(ARVORE** root, char arquivo[]) {
         ARVORE* newNode = malloc(sizeof(ARVORE));
 
         if(newNode == NULL){
-            printf("Memoria indisponível.\n");
+            printf("Memoria indisponivel.\n");
             exit(0);
         }
          
@@ -109,7 +108,7 @@ void exibeRegistroArvore(ARVORE* node) {
 void buscaMatricula(ARVORE* root, int key){
     
     if (root == NULL){
-    	puts ("Essa matricula não existe nos registros.");
+    	puts ("Essa matricula nao existe nos registros.");
         return;
 	}
     else if ( key < root->pessoa.matricula ){
@@ -151,31 +150,21 @@ void buscaNome(ARVORE* root, char key[]){
 
 
 /*
-
 void deletaMatriculaNaArvore(ARVORE** headRef) {
-
   ARVORE* node = (*headRef);
-
   int key;
   printf("Digite a matricula que deseja deletar: ");
   scanf("%d", &key);
-
   while(node != NULL) {
-
     if(node->pessoa.matricula == key){
       deleteNode(headRef, node);
       printf("Foi deletado.\n");
       return;
     }
-
     node = node->proximo;
-
-
   }
-
   printf("%d nao existe nos registros.\n", key);
   return;
-
 }
 */
 
@@ -185,7 +174,7 @@ ARVORE* criaNovoRegistro() {
   ARVORE* newNode = malloc(sizeof(ARVORE));
 
   if(newNode == NULL){
-    printf("Memoria indisponível.\n");
+    printf("Memoria indispon�vel.\n");
     exit(0);
   }
 
