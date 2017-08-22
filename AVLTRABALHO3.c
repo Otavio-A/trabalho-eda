@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
-#include "trabalho_avl.h"
+#include "avl.h"
 
  
 int altura(struct Node *N)
@@ -228,7 +228,7 @@ int main(){
 		else if (escolha == 3){
 			puts ("Digite o nome que deseja buscar:");
 			char nome[50];
-    		scanf("%s", &nome);
+    		scanf("%s", nome);
     		time(&start);
 			buscaNome(root, nome);
 			time(&end);
@@ -247,7 +247,7 @@ int main(){
 		}
 		
 		else if (escolha == 5){
-			puts ("Digite as informacoes para inserir:\n1 - Matricula\n2 - Nome\n3 - Sobrenome\n4 - Email\n5 - Telefone\n6 - Salario");
+			puts ("Digite as informacoes para inserir:\n");
 			insereOrdenadoNaArvore(&root);
 		}
 		else if (escolha == 6){   

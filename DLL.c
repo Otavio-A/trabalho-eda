@@ -4,7 +4,7 @@
 //http://www.geeksforgeeks.org/delete-a-node-in-a-doubly-linked-list/
 #include <stdio.h>
 #include <stdlib.h>
-#include "structs.h"
+#include "DLL.h"
 
 // adciona no início
 void push(LISTA** headRef, LISTA* newNode) {
@@ -95,7 +95,7 @@ void append(LISTA** headRef, LISTA* newNode) {
 
 }
 
-void printList(LISTA* node) {
+void imprimeLista(LISTA* node) {
 
 	//LISTA* last;
 
