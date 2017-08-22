@@ -1,5 +1,5 @@
-#ifndef _STCT_H_
-#define _STCT_H_
+#ifndef _DLL_H_
+#define _DLL_H_
 
 
 typedef struct informacoes{

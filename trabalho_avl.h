@@ -1,3 +1,6 @@
+#ifndef _AVL_H_
+#define _AVL_H_
+
 typedef struct informacoes{
 
     int matricula;
@@ -40,3 +43,4 @@ ARVORE* deleteTreeNode(ARVORE* root, int matricula);
 void exibeRegistroTree(ARVORE* node);
 void imprimeArvore(ARVORE *root);
 
+#endif
