@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "trabalho_avl.h"
+#include "avl.h"
 
 void importaRegistroParaArvore(ARVORE** root, char arquivo[]) {
 
@@ -86,6 +86,8 @@ void importaRegistroParaArvore(ARVORE** root, char arquivo[]) {
      
 
     }
+
+    fclose(f);
   
 }
 
