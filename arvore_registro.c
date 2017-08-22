@@ -90,7 +90,7 @@ void importaRegistroParaArvore(ARVORE** root, char arquivo[]) {
   
 }
 
-void exibeRegistroTree(ARVORE* node) {
+void exibeRegistroArvore(ARVORE* node) {
 
    printf("--------------------------------------\n");
 
@@ -113,15 +113,15 @@ void buscaMatricula(ARVORE* root, int key){
         return;
 	}
     else if ( key < root->pessoa.matricula ){
-        busca_mat(root->esquerda, key);
+        buscaMatricula(root->esquerda, key);
 	}
         
     else if( key > root->pessoa.matricula ){
-        busca_mat(root->direita, key);
+        buscaMatricula(root->direita, key);
 	}
     else if (key == root->pessoa.matricula){
     	printf("O resgitro correspondente a matricula %d eh:\n", key);
-    	exibeRegistroTree(root);
+    	exibeRegistroArvore(root);
         return;
 	}
 }
@@ -134,15 +134,15 @@ void buscaNome(ARVORE* root, char key[]){
 	}
 
     else if ( strcmp(root->pessoa.nome, key) > 0 ){
-        busca_nome(root->esquerda, key);
+        buscaNome(root->esquerda, key);
 	}
         
     else if( strcmp(root->pessoa.nome, key) < 0){
-        busca_nome(root->direita, key);
+        buscaNome(root->direita, key);
 	}
     else if (strcmp(root->pessoa.nome, key) == 0){
     	printf("Os dados de %s sao:\n", key);
-        exibeRegistroTree(root);
+        exibeRegistroArvore(root);
         return;
 	}
 }

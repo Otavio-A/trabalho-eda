@@ -23,7 +23,8 @@ typedef struct Node{
 
 void importaRegistroParaArvore(ARVORE** root, char arquivo[]);
 void buscaMatricula(ARVORE* root, int key);
-void buscaNome(ARVORE* root, char key[])
+void buscaNome(ARVORE* root, char key[]);
+void exibeRegistroArvore(ARVORE* node);
 
 
 
@@ -36,5 +37,5 @@ ARVORE* insert(ARVORE** node, ARVORE* newNode);
 ARVORE * minValueNode(ARVORE* node);
 ARVORE* deleteTreeNode(ARVORE* root, int matricula);
 void exibeRegistroTree(ARVORE* node);
-void ListaArvore(ARVORE *root);
+void imprimeArvore(ARVORE *root);
 

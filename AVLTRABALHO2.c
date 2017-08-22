@@ -186,54 +186,16 @@ ARVORE* deleteTreeNode(ARVORE* root, int matricula){
     return root;
 }
  
-void busca_mat(ARVORE* root, int key){
-    
-    if (root == NULL){
-    	puts ("Essa matricula não existe nos registros.");
-        return;
-	}
-    else if ( key < root->pessoa.matricula ){
-        busca_mat(root->esquerda, key);
-	}
-        
-    else if( key > root->pessoa.matricula ){
-        busca_mat(root->direita, key);
-	}
-    else if (key == root->pessoa.matricula){
-    	printf("O resgitro correspondente a matricula %d eh:\n", key);
-    	exibeRegistroTree(root);
-        return;
-	}
-}
 
-void busca_nome(ARVORE* root, char key[]){
 
-    if (root == NULL){
-    	puts ("Esse nome nao existe nos registros.");
-    	return;
-	}
 
-    else if ( strcmp(root->pessoa.nome, key) > 0 ){
-        busca_nome(root->esquerda, key);
-	}
-        
-    else if( strcmp(root->pessoa.nome, key) < 0){
-        busca_nome(root->direita, key);
-	}
-    else if (strcmp(root->pessoa.nome, key) == 0){
-    	printf("Os dados de %s sao:\n", key);
-        exibeRegistroTree(root);
-        return;
-	}
-}
-
-void ListaArvore(ARVORE *root){
+void imprimeArvore(ARVORE *root){
     if(root != NULL){
-    	ListArvore(root->esquerda);
+    	imprimeArvore(root->esquerda);
         
-        exibeRegistroTree(root);
+        exibeRegistroArvore(root);
 
-        ListArvore(root->direita);
+        imprimeArvore(root->direita);
     }
 }
  
@@ -246,19 +208,19 @@ int main(){
     scanf("%s", arquivo);
 
     importaRegistroParaArvore(&root, arquivo);
-    ListArvore(root);
+    imprimeArvore(root);
 
     //printf("\nDigite o nome que esta buscando: ");
     //char nome[20];
     //scanf("%s", nome);
 
-    //busca_nome(root, nome);
+    //buscaNome(root, nome);
 
     printf("\nDigite a matricula que esta procurando: ");
     int matricula;
     scanf("%d", &matricula);
 
-    busca_mat(root, matricula);
+   buscaMatricula(root, matricula);
 
 
 
