@@ -252,6 +252,7 @@ int main(){
    			int matricula;
     		scanf("%d", &matricula);
     		time(&start);
+    		buscaMatricula(root, matricula);
 			root = deleteTreeNode(root, matricula);
 			time(&end);
 		    diff_t = difftime(end, start);
