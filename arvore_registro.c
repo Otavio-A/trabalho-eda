@@ -1,11 +1,11 @@
-//referÍncia: http://www.geeksforgeeks.org/fseek-in-c-with-example/
+//refer√™ncia: http://www.geeksforgeeks.org/fseek-in-c-with-example/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <time.h>
 #include "trabalho_avl.h"
 
 void importaRegistroParaArvore(ARVORE** root, char arquivo[]) {
+
     FILE* f;
     char linha[300];
 
@@ -15,7 +15,7 @@ void importaRegistroParaArvore(ARVORE** root, char arquivo[]) {
     f = fopen(arquivo, "r");
 
     if(f == NULL){
-        printf("Desculpa, banco de dados indisponivel\n");
+        printf("Desculpa, banco de dados indispon√≠vel\n");
         exit(0);
     }
 
@@ -36,8 +36,8 @@ void importaRegistroParaArvore(ARVORE** root, char arquivo[]) {
 
     printf("A quantidade de registros eh:%d\n", qtd);
         
-     // O fseek faz com que a barra se seleÁ„o pule para local indicado;
-     //Nesses caso, a barra ir· pular 49 bytes a partir da linha inicial(SEEK_SET);    
+     // O fseek faz com que a barra se sele√ß√£o pule para local indicado;
+     //Nesses caso, a barra ir√° pular 49 bytes a partir da linha inicial(SEEK_SET);    
     fseek(f, auxiliar, SEEK_SET);
     
     for(int i = 0; i < qtd; i++) {
@@ -45,7 +45,7 @@ void importaRegistroParaArvore(ARVORE** root, char arquivo[]) {
         ARVORE* newNode = malloc(sizeof(ARVORE));
 
         if(newNode == NULL){
-            printf("Memoria indisponÌvel.\n");
+            printf("Memoria indispon√≠vel.\n");
             exit(0);
         }
          
@@ -101,15 +101,15 @@ void exibeRegistroArvore(ARVORE* node) {
     printf("Telefone: %s\n", node->pessoa.telefone);
     printf("Salario: %.2f\n", node->pessoa.salario);
 
+    
 
 }
 
 
 void buscaMatricula(ARVORE* root, int key){
-   
+    
     if (root == NULL){
-    	puts ("Essa matricula nao existe nos registros.");
-    	
+    	puts ("Essa matricula n√£o existe nos registros.");
         return;
 	}
     else if ( key < root->pessoa.matricula ){
@@ -122,16 +122,15 @@ void buscaMatricula(ARVORE* root, int key){
     else if (key == root->pessoa.matricula){
     	printf("O resgitro correspondente a matricula %d eh:\n", key);
     	exibeRegistroArvore(root);
-    	
         return;
 	}
 }
 
 void buscaNome(ARVORE* root, char key[]){
+
     if (root == NULL){
     	puts ("Esse nome nao existe nos registros.");
     	return;
-    	
 	}
 
     else if ( strcmp(root->pessoa.nome, key) > 0 ){
@@ -145,7 +144,6 @@ void buscaNome(ARVORE* root, char key[]){
     	printf("Os dados de %s sao:\n", key);
         exibeRegistroArvore(root);
         return;
-        
 	}
 }
 
@@ -153,59 +151,110 @@ void buscaNome(ARVORE* root, char key[]){
 
 
 /*
+
 void deletaMatriculaNaArvore(ARVORE** headRef) {
+
   ARVORE* node = (*headRef);
+
   int key;
   printf("Digite a matricula que deseja deletar: ");
   scanf("%d", &key);
+
   while(node != NULL) {
+
     if(node->pessoa.matricula == key){
       deleteNode(headRef, node);
       printf("Foi deletado.\n");
       return;
     }
+
     node = node->proximo;
+
+
   }
+
   printf("%d nao existe nos registros.\n", key);
   return;
+
 }
-ARVORE* criaNovoNoNaArvore() {
+*/
+
+ARVORE* criaNovoRegistro() {
+
+
   ARVORE* newNode = malloc(sizeof(ARVORE));
+
   if(newNode == NULL){
-    printf("Memoria indisponÌvel.\n");
+    printf("Memoria indispon√≠vel.\n");
     exit(0);
   }
+
     int matricula;
     printf("Matricula: ");
     scanf("%d", &(newNode->pessoa.matricula));
     getchar();
+
     char nome[20];
     printf("Nome: ");
     fgets(nome, 20, stdin);
     nome[strcspn(nome, "\n")] = 0;
     newNode->pessoa.nome = malloc(sizeof(nome)*10);
     strcpy(newNode->pessoa.nome,nome);
+
     char sobrenome[20];
     printf("Sobrenome: ");
     fgets(sobrenome, 20, stdin);
     sobrenome[strcspn(sobrenome, "\n")] = 0;
     newNode->pessoa.sobrenome = malloc(sizeof(sobrenome)*10);
     strcpy(newNode->pessoa.sobrenome,sobrenome);
+
+
     char email[30];
     printf("Email: ");
     fgets(email, 30, stdin);
     email[strcspn(email, "\n")] = 0;
     newNode->pessoa.email = malloc(sizeof(email)*10);
     strcpy(newNode->pessoa.email,email);
+
     char telefone[18];
     printf("Telefone: ");
     fgets(telefone, 18, stdin);
     telefone[strcspn(telefone, "\n")] = 0;
     newNode->pessoa.telefone = malloc(sizeof(telefone)*10);
     strcpy(newNode->pessoa.telefone,telefone);
+
     float salario;
     printf("Salario: ");
     scanf("%f", &(newNode->pessoa.salario));
+
     return newNode;
+
 }
-*/
+
+void insereOrdenadoNaArvore(ARVORE** rootRef) {
+
+	ARVORE* newNode = criaNovoRegistro();
+	ARVORE* curPtr = (*rootRef);
+
+	while(curPtr != NULL) {
+
+		if(curPtr->pessoa.matricula == newNode->pessoa.matricula) {
+			printf("Esse registro ja existe na arvore.\n");
+			return;
+		}
+		else if(newNode->pessoa.matricula < curPtr->pessoa.matricula){
+			//printf("Indo para a direita\n");
+			curPtr = curPtr->esquerda;
+		}	
+		else{
+			//printf("Indo para a esquerda\n");
+			curPtr = curPtr->direita;
+		}
+
+	}
+
+
+	(*rootRef) = insert(rootRef, newNode);
+	return;
+
+}

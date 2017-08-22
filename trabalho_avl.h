@@ -25,6 +25,8 @@ void importaRegistroParaArvore(ARVORE** root, char arquivo[]);
 void buscaMatricula(ARVORE* root, int key);
 void buscaNome(ARVORE* root, char key[]);
 void exibeRegistroArvore(ARVORE* node);
+ARVORE* criaNovoRegistro();
+void insereOrdenadoNaArvore(ARVORE** rootRef);
 
 
 
