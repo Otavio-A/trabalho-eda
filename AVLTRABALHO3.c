@@ -201,6 +201,7 @@ void imprimeArvore(ARVORE *root){
 int main(){
 	int escolha;
     ARVORE* root = NULL;
+    
     char arquivo[20];
 	for ( ; ; ){
 		time_t start, end;
@@ -244,8 +245,10 @@ int main(){
 		    diff_t = difftime(end, start);
 		    printf ("Tempo de Busca %f\n", diff_t);
 		}
+		
 		else if (escolha == 5){
 			puts ("Digite as informacoes para inserir:\n1 - Matricula\n2 - Nome\n3 - Sobrenome\n4 - Email\n5 - Telefone\n6 - Salario");
+			insereOrdenadoNaArvore(&root);
 		}
 		else if (escolha == 6){   
 	    	printf ("Digite a matricula que deseja remover o registro!\n");
