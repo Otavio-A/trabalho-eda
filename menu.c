@@ -22,11 +22,10 @@ int quantidadeDeRegistros(char arquivo[]) {
 }
 
 
-void ImportaRegistro(ARVORE* root, LISTA* head) {
+void ImportaRegistro(ARVORE** root, LISTA** head) {
 
 
 	char arquivo[20];
-
 	printf("Digite o nome do arquivo que deseja importar: ");
 	scanf("%s", arquivo);
 
@@ -34,13 +33,13 @@ void ImportaRegistro(ARVORE* root, LISTA* head) {
 	double tempoTree, tempoList;
 
 	tTree = clock();
-	importaRegistroParaArvore(&root, arquivo);
+	importaRegistroParaArvore(root, arquivo);
 	tTree = clock() - tTree;
 
 	tempoTree = ((double)tTree)/CLOCKS_PER_SEC;
 
 	tList = clock();
-	importaRegistroParaLista(&head, arquivo);
+	importaRegistroParaLista(head, arquivo);
 	tList = clock() - tList;
 
 	tempoList = ((double)tList)/CLOCKS_PER_SEC;
@@ -64,7 +63,7 @@ int main() {
 	ARVORE* root = NULL;
 	LISTA* head = NULL;
 
-	ImportaRegistro(root, head);
+	ImportaRegistro(&root, &head);
 
 
 	while(1) {
@@ -82,12 +81,13 @@ int main() {
 		printf("(5) - imprimir os registros\n");
 		printf("escolha: ");
 		scanf("%d", &escolha);
+		getchar();
 
 
 		clock_t tTree, tList;
 		double tempoArvore, tempoLista;
 
-		switch(escola) {
+		switch(escolha) {
 			char subEscolha;
 
 			case 1:
@@ -95,12 +95,15 @@ int main() {
 				printf("Em qual estrutura voce deseja buscar?\n");
 				printf("(a) - Arvore | (b) - Lista Duplamente Encadeada\nescolha: ");
 				scanf("%c", &subEscolha);
+				getchar();
 				
 				switch(subEscolha){
 					case 'a':
 
 						printf("Digite a matricula que deseja buscar: \n");
 						scanf("%d", &mat);
+						getchar();
+
 						tTree = clock();
 						buscaMatriculaNaArvore(root, mat);
 						tTree = clock() - tTree;
@@ -118,7 +121,7 @@ int main() {
 
 							tempoLista = ((double)tList)/CLOCKS_PER_SEC;
 							printf("Tempo da funcao busca matricula na lista: %f segundo(s)\n", tempoLista);
-							break
+							break;
 
 						default:
 							printf("Opcao invalida!\n");
@@ -132,12 +135,15 @@ int main() {
 				printf("Em qual estrutura voce deseja buscar?\n");
 				printf("(a) - Arvore (b) - Lista Duplamente Encadeada\nescolha: ");
 				scanf("%c", &subEscolha);
+				getchar();
 
 				switch(subEscolha) {
 					case 'a':
 
 						printf("Digite o nome que deseja buscar: ");
 						scanf("%s", name);
+						getchar();
+
 						tTree = clock();
 						buscaNomeNaArvore(root, name);
 						tTree = clock() - tTree;
@@ -160,54 +166,113 @@ int main() {
 					default:
 						printf("Opcao invalida!\n");
 						break;
-
-				case 3:
-
-					tTree = clock();
-					insereOrdenadoNaArvore(&root);
-					tTree = clock() - tTree;
-
-					tempoArvore = ((double)tTree)/CLOCKS_PER_SEC;
-
-					tList = clock();
-					insereOrdenadoNaLista(&head);
-					tList = clock();
-
-					tempoLista = ((double)tTree)/CLOCKS_PER_SEC;
-
-					printf("Tempo de insercao de um novo no na arvore: %f segundo(s)\n", tempoArvore);
-					printf("Tempo de insercao de um novo no na lista: %f segundo(s)\n", tempoLista);
-
-					break;
-
-				case 4:
 					
 
 				}
 
+				break;
+			
+			case 3:
+
+				tTree = clock();
+				insereOrdenadoNaArvore(&root);
+				tTree = clock() - tTree;
+
+				tempoArvore = ((double)tTree)/CLOCKS_PER_SEC;
+
+				tList = clock();
+				insereOrdenadoNaLista(&head);
+				tList = clock();
+
+				tempoLista = ((double)tTree)/CLOCKS_PER_SEC;
+
+				printf("Tempo de insercao de um novo no na arvore: %f segundo(s)\n", tempoArvore);
+				printf("Tempo de insercao de um novo no na lista: %f segundo(s)\n", tempoLista);
+
+				break;
+
+			case 4:
+
+				printf("Em qual estrutura voce deseja deletar?\n");
+				printf("(a) - Arvore (b) - Lista Duplamente Encadeada\nescolha: ");
+				scanf("%c", &subEscolha);
+				getchar();
+
+				switch(subEscolha) {
 
 
+					case 'a':
+						
+						printf("Digite a matricula que deseja deletar: ");
+						scanf("%d", &mat);
 
+						tTree = clock();
+						deleteTreeNode(root, mat);
+						tTree = clock() - tTree;
 
+						tempoArvore = ((double)tTree)/CLOCKS_PER_SEC;
+						printf("Tempo de delecao na arvore: %f segundo(s)\n", tempoArvore);
+						break;
 
+					case 'b':
 
+						tList = clock();
+						deletaMatriculaNaLista(&head);
+						tList = clock();
+
+						tempoLista = ((double)tList)/CLOCKS_PER_SEC;
+						printf("Tempo de delecao na lista: %f segundo(s)\n", tempoLista);
+						break;
+
+					default:
+						printf("Opcao Invalida!\n");
+						break;
+
+				}
+
+				break;
+
+			case 5:
+
+				printf("De qual estrutura voce deseja imprimir\n");
+				printf("(a) - Arvore (b) - Lista Duplamente Encadeada\nescolha: ");
+				scanf("%c", &subEscolha);
+
+				switch(subEscolha) {
+
+					case 'a':
+
+						tTree = clock();
+						imprimeArvore(root);
+						tTree = clock() - tTree;
+
+						tempoArvore = ((double)tTree)/CLOCKS_PER_SEC;
+						printf("O tempo de impressao dos registros na arvore foi: %f segundo(s)\n", tempoArvore);
+						break;
+
+					case 'b':
+
+						tList = clock();
+						imprimeLista(head);
+						tList = clock();
+
+						tempoLista = ((double)tList)/CLOCKS_PER_SEC;
+						printf("O tempo de impressao dos registros na lista foi: %f segundo(s)\n", tempoLista);
+						break;
+
+					default:
+						printf("Opcao Invalida!\n");
+						break;
+
+				}
+
+				break;
 
 
 		}
 
 
-
-
-
-
-
 	}
-
-
-
-
-
-
 
 
 }
