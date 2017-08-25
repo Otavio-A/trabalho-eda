@@ -9,7 +9,7 @@ void importaRegistroParaArvore(ARVORE** root, char arquivo[]) {
     char linha[300];
 
     int qtd;
-    int auxiliar = 47;
+    int auxiliar = 49;
 
     f = fopen(arquivo, "r");
 
@@ -19,21 +19,16 @@ void importaRegistroParaArvore(ARVORE** root, char arquivo[]) {
     }
 
     fscanf(f, "%d", &qtd);
+    fseek(f, 0, SEEK_SET);
 
     // diz quantas linhas deve saltar.
-    if(qtd < 10) 
-      auxiliar += 3;
-    else if(qtd >= 10 && qtd < 100)
-      auxiliar += 4;
-    else if(qtd >= 100 && qtd < 1000)
-      auxiliar += 5;
-    else if(qtd >= 1000 && qtd < 10000)
-      auxiliar += 6;
-    else if(qtd >= 10000)
-      auxiliar += 7;
+    char c;
+    for(c = fgetc(f); c != '\n'; c = fgetc(f)) {
+      auxiliar++;
+    }
 
-
-    printf("A quantidade de registros eh:%d\n", qtd);
+    printf("auxiliar(Arvore) = %d\n", auxiliar);
+    fseek(f, 0, SEEK_SET);
         
      // O fseek faz com que a barra se seleção pule para local indicado;
      //Nesses caso, a barra irá pular 49 bytes a partir da linha inicial(SEEK_SET);    
