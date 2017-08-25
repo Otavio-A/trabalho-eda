@@ -28,7 +28,6 @@ void importaRegistroParaLista(LISTA** headRef, char arquivo[]) {
     for(c = fgetc(f); c != '\n'; c = fgetc(f)) {
       auxiliar++;
     }
-    printf("auxiliar(Lista) = %d\n", auxiliar);
     fseek(f, 0, SEEK_SET);
 
      // O fseek faz com que a barra se seleção pule para local indicado;
