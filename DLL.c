@@ -4,7 +4,7 @@
 //http://www.geeksforgeeks.org/delete-a-node-in-a-doubly-linked-list/
 #include <stdio.h>
 #include <stdlib.h>
-#include "DLL.h"
+#include "geral.h"
 
 // adciona no início
 void push(LISTA** headRef, LISTA* newNode) {
@@ -39,7 +39,7 @@ void deleteNode(LISTA** headRef, LISTA* del) {
 	if(del->anterior != NULL)			//muda o anterior somente se o nó a ser deletado não é o primeiro nó.
 		del->anterior->proximo = del->proximo;
 
-	exibeRegistro(del);
+	exibeRegistroNaLista(del);
 
 	free(del);
 	return;
@@ -97,21 +97,14 @@ void append(LISTA** headRef, LISTA* newNode) {
 
 void imprimeLista(LISTA* node) {
 
-	//LISTA* last;
 
 	printf("\nOs dados em ordem sao:\n");
 	while(node != NULL) {
-		//printf(" %d ", node->data);
-		//last = node;
-		exibeRegistro(node);
+
+		exibeRegistroNaLista(node);
 		node = node->proximo;
 	}
 
-	//printf("\nEm ordem reversa:\n");
-	//while(last !=NULL) {
-		//printf(" %d ", las->data);
-		//last = last->anterior;
-	//}
 	printf("\n");
 
 }

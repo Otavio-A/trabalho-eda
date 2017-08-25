@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
-#include "avl.h"
+#include "geral.h"
 
  
 int altura(struct Node *N)
@@ -197,70 +197,4 @@ void imprimeArvore(ARVORE *root){
         imprimeArvore(root->direita);
     }
 }
- 
-int main(){
-	int escolha;
-    ARVORE* root = NULL;
-    
-    char arquivo[20];
-	for ( ; ; ){
-		time_t start, end;
-		double diff_t;
-	    printf ("O que deseja fazer?\n(1) - Importar registros atraves do arquivo\n(2) - Exibir registros por ordem de matricula\n(3) - Buscar registro por nome\n(4) - Buscar registro por matricula\n(5) - Inserir novo registo\n(6) - Remover registro\n");
-	    scanf ("%d", &escolha);
-	    if (escolha == 1){
-	    	printf("Digite o nome do arquivo: ");
-		    scanf("%s", arquivo);
-			time(&start);
-		    importaRegistroParaArvore(&root, arquivo);
-		    time(&end);
-		    diff_t = difftime(end, start);
-		    printf ("Tempo de Importacao %f\n", diff_t);
-		}
-		else if (escolha == 2){
-			time(&start);
-			imprimeArvore(root);
-			puts ("-----------------o------------------");
-			time(&end);
-		    diff_t = difftime(end, start);
-		    printf ("Tempo de Exibicao %f\n", diff_t);
-		}
-		else if (escolha == 3){
-			puts ("Digite o nome que deseja buscar:");
-			char nome[50];
-    		scanf("%s", nome);
-    		time(&start);
-			buscaNome(root, nome);
-			time(&end);
-		    diff_t = difftime(end, start);
-		    printf ("Tempo de Busca %f\n", diff_t);
-		}
-		else if (escolha == 4){
-			printf("\nDigite a matricula que esta procurando: ");
-   			int matricula;
-    		scanf("%d", &matricula);
-    		time(&start);
-			buscaMatricula(root, matricula);
-			time(&end);
-		    diff_t = difftime(end, start);
-		    printf ("Tempo de Busca %f\n", diff_t);
-		}
-		
-		else if (escolha == 5){
-			puts ("Digite as informacoes para inserir:\n");
-			insereOrdenadoNaArvore(&root);
-		}
-		else if (escolha == 6){   
-	    	printf ("Digite a matricula que deseja remover o registro!\n");
-   			int matricula;
-    		scanf("%d", &matricula);
-    		time(&start);
-    		buscaMatricula(root, matricula);
-			root = deleteTreeNode(root, matricula);
-			time(&end);
-		    diff_t = difftime(end, start);
-		    printf ("Tempo de Remocao %f\n", diff_t);
-	 	}
-	}
 
-}

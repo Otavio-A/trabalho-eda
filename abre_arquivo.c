@@ -2,9 +2,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "structs.h"
+#include "geral.h"
 
-void importaRegistro(LISTA** headRef, char arquivo[]) {
+void importaRegistroParaLista(LISTA** headRef, char arquivo[]) {
 
     FILE* f;
     char linha[300];
@@ -32,9 +32,6 @@ void importaRegistro(LISTA** headRef, char arquivo[]) {
       auxiliar += 6;
     else if(qtd >= 10000)
       auxiliar += 7;
-
-
-    printf("A quantidade de registros eh:%d\n", qtd);
         
      // O fseek faz com que a barra se seleção pule para local indicado;
      //Nesses caso, a barra irá pular 49 bytes a partir da linha inicial(SEEK_SET);    
@@ -87,14 +84,15 @@ void importaRegistro(LISTA** headRef, char arquivo[]) {
      
 
     }
+
+   fclose(f);
   
 }
 
-void exibeRegistro(LISTA* curPtr) {
+void exibeRegistroNaLista(LISTA* curPtr) {
 
 
     printf("--------------------------------------\n");
-
     printf("Matricula: %d\n", curPtr->pessoa.matricula);
     printf("Nome: %s\n", curPtr->pessoa.nome);
     printf("Sobrenome: %s\n", curPtr->pessoa.sobrenome);
@@ -105,7 +103,7 @@ void exibeRegistro(LISTA* curPtr) {
 
 }
 
-void buscaPeloNome(LISTA* node) {
+void buscaNomeNaLista(LISTA* node) {
 
   char key[10];
 
@@ -117,7 +115,7 @@ void buscaPeloNome(LISTA* node) {
     if(strcmp((node->pessoa).nome, key) == 0){
 
       printf("Os dados de %s sao:\n", node->pessoa.nome);
-      exibeRegistro(node);
+      exibeRegistroNaLista(node);
 
       return;
     
@@ -133,7 +131,7 @@ void buscaPeloNome(LISTA* node) {
 }
 
 
-void buscaPelaMatricula(LISTA* node) {
+void buscaMatriculaNaLista(LISTA* node) {
 
   int key;
 
@@ -145,7 +143,7 @@ void buscaPelaMatricula(LISTA* node) {
     if(node->pessoa.matricula == key){
       
       printf("Os dados de %d sao:\n", node->pessoa.matricula);
-      exibeRegistro(node);
+      exibeRegistroNaLista(node);
 
       return;
     }
@@ -154,17 +152,17 @@ void buscaPelaMatricula(LISTA* node) {
 
   }
 
-  printf("%d nao existe nos registros.\n", node->pessoa.matricula);
+  printf("%d nao existe nos registros.\n", key);
   return;
 
 }
 
-void deletaMatricula(LISTA** headRef) {
+void deletaMatriculaNaLista(LISTA** headRef) {
 
   LISTA* node = (*headRef);
 
   int key;
-  printf("Digite a matricula que deseja deletar: ");
+  printf("Digite a matricula corresponde ao registro que deseja deletar: ");
   scanf("%d", &key);
 
   while(node != NULL) {
@@ -186,7 +184,7 @@ void deletaMatricula(LISTA** headRef) {
 }
 
 
-LISTA* criaNovoNo() {
+LISTA* criaNovoNoNaLista() {
 
 
   LISTA* newNode = malloc(sizeof(LISTA));
@@ -195,6 +193,8 @@ LISTA* criaNovoNo() {
     printf("Memoria indisponível.\n");
     exit(0);
   }
+
+    printf("Por favor, digite as informacoes solicitadas abaixo\n");
 
     int matricula;
     printf("Matricula: ");
@@ -239,16 +239,16 @@ LISTA* criaNovoNo() {
 }
 
 
-void insereOrdenado(LISTA** headRef){
+void insereOrdenadoNaLista(LISTA** headRef){
 
   LISTA* curPtr = (*headRef);
-  LISTA* newNode = criaNovoNo();
+  LISTA* newNode = criaNovoNoNaLista();
 
-
+  // verifica se ja existe uma matricula dessa na lista
   while(curPtr != NULL) {
 
     if(newNode->pessoa.matricula == curPtr->pessoa.matricula){
-      printf("Ja existe um registro com essa matricula\n");
+      printf("Ja existe um registro com essa matricula na lista.\n");
       return;
     }
 
@@ -258,6 +258,7 @@ void insereOrdenado(LISTA** headRef){
 
   curPtr = (*headRef);
 
+  // insere na lista
   while(curPtr != NULL) {
 
     if(curPtr->pessoa.matricula > newNode->pessoa.matricula) {

@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "avl.h"
+#include "geral.h"
 
 void importaRegistroParaArvore(ARVORE** root, char arquivo[]) {
 
@@ -107,18 +107,18 @@ void exibeRegistroArvore(ARVORE* node) {
 }
 
 
-void buscaMatricula(ARVORE* root, int key){
+void buscaMatriculaNaArvore(ARVORE* root, int key){
     
     if (root == NULL){
     	puts ("Essa matricula nao existe nos registros.");
         return;
 	}
     else if ( key < root->pessoa.matricula ){
-        buscaMatricula(root->esquerda, key);
+        buscaMatriculaNaArvore(root->esquerda, key);
 	}
         
     else if( key > root->pessoa.matricula ){
-        buscaMatricula(root->direita, key);
+        buscaMatriculaNaArvore(root->direita, key);
 	}
     else if (key == root->pessoa.matricula){
     	printf("O resgitro correspondente a matricula %d eh:\n", key);
@@ -127,7 +127,7 @@ void buscaMatricula(ARVORE* root, int key){
 	}
 }
 
-void buscaNome(ARVORE* root, char key[]){
+void buscaNomeNaArvore(ARVORE* root, char key[]){
 
     if (root == NULL){
     	puts ("Esse nome nao existe nos registros.");
@@ -135,11 +135,11 @@ void buscaNome(ARVORE* root, char key[]){
 	}
 
     else if ( strcmp(root->pessoa.nome, key) > 0 ){
-        buscaNome(root->esquerda, key);
+        buscaNomeNaArvore(root->esquerda, key);
 	}
         
     else if( strcmp(root->pessoa.nome, key) < 0){
-        buscaNome(root->direita, key);
+        buscaNomeNaArvore(root->direita, key);
 	}
     else if (strcmp(root->pessoa.nome, key) == 0){
     	printf("Os dados de %s sao:\n", key);
@@ -149,26 +149,6 @@ void buscaNome(ARVORE* root, char key[]){
 }
 
 
-
-
-/*
-void deletaMatriculaNaArvore(ARVORE** headRef) {
-  ARVORE* node = (*headRef);
-  int key;
-  printf("Digite a matricula que deseja deletar: ");
-  scanf("%d", &key);
-  while(node != NULL) {
-    if(node->pessoa.matricula == key){
-      deleteNode(headRef, node);
-      printf("Foi deletado.\n");
-      return;
-    }
-    node = node->proximo;
-  }
-  printf("%d nao existe nos registros.\n", key);
-  return;
-}
-*/
 
 ARVORE* criaNovoRegistro() {
 
