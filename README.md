@@ -20,7 +20,7 @@ livros, Introduction to Algorithms(CLRS) e Estruturas De Dados Usando C.
 
 
 
-Otávio Augusto Cartaxo Araújo  
+Otávio Augusto 
 Jorge Ueiner
 
 
