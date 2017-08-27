@@ -3,7 +3,7 @@ Projeto prático em equipe proposto pelo professor Galdir Damasceno aos alunos d
 no semestre de 2017.1 no curso de ciência da computação, Universidade Federal da Bahia.
 
 O projeto consiste em, ler de um arquivo do tipo csv, dados fictícios dos funcionários de uma empresa, e importar para duas estruturas de dados.
-Uma árvore AVL e uma lista duplamente encadeada. Ambas as estruturas armazenma um registro para cada linha, onde cada registro
+Uma árvore AVL e uma lista duplamente encadeada. Ambas as estruturas armazenam um registro para cada linha, onde cada registro
 possuí variáveis referentes a cada coluna do arquivo, como matrícula, nome, sobrenome, email, telefone e salário. E cada estrutura
 é ordenada pela variável matrícula, no momento da inserção.
 
