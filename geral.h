@@ -4,10 +4,10 @@
 typedef struct informacoes{
 
     int matricula;
-    char* nome;
-    char* sobrenome;
-    char* email;
-    char* telefone;
+    char nome[20];
+    char sobrenome[20];
+    char email[30];
+    char telefone[18];
     float salario;
 
 }INFO;
@@ -36,8 +36,7 @@ void exibeRegistroNaLista(LISTA* node);
 void deletaMatriculaNaLista(LISTA** headRef);
 void buscaMatriculaNaLista(LISTA* node);
 void buscaNomeNaLista(LISTA* node);
-void insereOrdenadoNaLista(LISTA** headRef);
-LISTA* criaNovoNoNaLista();
+void insereOrdenadoNaLista(LISTA** headRef, INFO* novoRegistro);
 
 
 typedef struct Node{
@@ -65,9 +64,8 @@ void imprimeArvore(ARVORE *root);
 
 void importaRegistroParaArvore(ARVORE** root, char arquivo[]);
 void buscaMatriculaNaArvore(ARVORE* root, int key);
-void buscaNomeNaArvore(ARVORE* root, char key[]);
+void buscaNomeNaArvore(ARVORE* root);
 void exibeRegistroArvore(ARVORE* node);
-void insereOrdenadoNaArvore(ARVORE** rootRef);
-ARVORE* criaNovoRegistro();
+void insereOrdenadoNaArvore(ARVORE** rootRef, INFO* novoRegistro);
 
 #endif

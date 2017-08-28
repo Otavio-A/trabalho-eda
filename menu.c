@@ -28,6 +28,7 @@ void ImportaRegistro(ARVORE** root, LISTA** head) {
 	char arquivo[20];
 	printf("Digite o nome do arquivo que deseja importar: ");
 	scanf("%s", arquivo);
+	getchar();
 
 	clock_t tTree, tList;
 	double tempoTree, tempoList;
@@ -35,21 +36,73 @@ void ImportaRegistro(ARVORE** root, LISTA** head) {
 	tTree = clock();
 	importaRegistroParaArvore(root, arquivo);
 	tTree = clock() - tTree;
-
 	tempoTree = ((double)tTree)/CLOCKS_PER_SEC;
+
 
 	tList = clock();
 	importaRegistroParaLista(head, arquivo);
 	tList = clock() - tList;
-
 	tempoList = ((double)tList)/CLOCKS_PER_SEC;
 
-
+	
 	printf("\n---------------------------------------------------------------------------\n");
 	printf("Total de registros importados: %d\n", quantidadeDeRegistros(arquivo));
 	printf("Tempo de importacao para a arvore: %f segundo(s)\n", tempoTree);
 	printf("Tempo de importacao para a lista duplamente encadeada: %f segundo(s)\n", tempoList);
 	printf("---------------------------------------------------------------------------\n\n");
+
+}
+
+void insereNovoRegistro(ARVORE** rootRef, LISTA** headRef){
+
+
+	clock_t tTree, tList;
+	double tempoArvore,  tempoLista;
+
+	INFO* novoRegistro = malloc(sizeof(INFO));
+	
+	if(novoRegistro == NULL){
+		puts("Memoria indisponivel");
+		exit(0);
+	}
+
+	printf("Matricula: ");
+	scanf("%d",  &novoRegistro->matricula);
+	getchar();
+
+	printf("Nome: ");
+	fgets(novoRegistro->nome, 20, stdin);
+	novoRegistro->nome[strcspn(novoRegistro->nome, "\n")] = 0;
+
+	printf("sobrenome: ");
+	fgets(novoRegistro->sobrenome, 20, stdin);
+    novoRegistro->sobrenome[strcspn(novoRegistro->sobrenome, "\n")] = 0;
+
+    printf("Email: ");
+    fgets(novoRegistro->email, 30, stdin);
+    novoRegistro->email[strcspn(novoRegistro->email, "\n")] = 0;
+
+    printf("Telefone: ");
+    fgets(novoRegistro->telefone, 18, stdin);
+    novoRegistro->telefone[strcspn(novoRegistro->telefone, "\n")] = 0;
+
+    printf("salario: ");
+    scanf("%f", &novoRegistro->salario);
+    getchar();
+
+    tTree = clock();
+    insereOrdenadoNaArvore(rootRef, novoRegistro);
+    tTree = clock() - tTree;
+    tempoArvore = ((double)tTree)/CLOCKS_PER_SEC;
+
+    tList = clock();
+    insereOrdenadoNaLista(headRef, novoRegistro);
+    tList = clock() - tList;
+    tempoLista = ((double)tList)/CLOCKS_PER_SEC;
+
+   	printf("Tempo de insercao de um novo no na arvore: %f segundo(s)\n", tempoArvore);
+	printf("Tempo de insercao de um novo no na lista: %f segundo(s)\n", tempoLista);
+
 
 
 
@@ -140,12 +193,8 @@ int main() {
 				switch(subEscolha) {
 					case 'a':
 
-						printf("Digite o nome que deseja buscar: ");
-						scanf("%s", name);
-						getchar();
-
 						tTree = clock();
-						buscaNomeNaArvore(root, name);
+						buscaNomeNaArvore(root);
 						tTree = clock() - tTree;
 
 						tempoArvore = ((double)tTree)/CLOCKS_PER_SEC;
@@ -174,20 +223,7 @@ int main() {
 			
 			case 3:
 
-				tTree = clock();
-				insereOrdenadoNaArvore(&root);
-				tTree = clock() - tTree;
-
-				tempoArvore = ((double)tTree)/CLOCKS_PER_SEC;
-
-				tList = clock();
-				insereOrdenadoNaLista(&head);
-				tList = clock();
-
-				tempoLista = ((double)tTree)/CLOCKS_PER_SEC;
-
-				printf("Tempo de insercao de um novo no na arvore: %f segundo(s)\n", tempoArvore);
-				printf("Tempo de insercao de um novo no na lista: %f segundo(s)\n", tempoLista);
+				insereNovoRegistro(&root, &head);
 
 				break;
 

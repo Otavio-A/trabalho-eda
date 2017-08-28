@@ -7,10 +7,10 @@
 void importaRegistroParaLista(LISTA** headRef, char arquivo[]) {
 
     FILE* f;
-    char linha[300];
 
     int qtd;
-    int auxiliar = 49;
+    int auxiliar = 0;
+    char teste[200];
 
     f = fopen(arquivo, "r");
 
@@ -24,16 +24,26 @@ void importaRegistroParaLista(LISTA** headRef, char arquivo[]) {
 
     // diz quantas linhas deve saltar.
   
-    char c;
-    for(c = fgetc(f); c != '\n'; c = fgetc(f)) {
-      auxiliar++;
+  
+   int newline = 0;
+    for(char c = fgetc(f); newline < 2; c = fgetc(f)){
+      if(c == '\n'){
+        newline++;
+      }
+      else{
+        auxiliar++;
+      }
     }
+
+
     fseek(f, 0, SEEK_SET);
+    //printf("auxiliar(LISTA) = %d\n", auxiliar);
 
      // O fseek faz com que a barra se seleção pule para local indicado;
      //Nesses caso, a barra irá pular 49 bytes a partir da linha inicial(SEEK_SET);
 
     fseek(f, auxiliar, SEEK_SET);
+    fgets(teste, 200, f);
     
     for(int i = 0; i < qtd; i++) {
 
@@ -46,7 +56,8 @@ void importaRegistroParaLista(LISTA** headRef, char arquivo[]) {
          
          newNode->proximo = NULL;   
 
-         fgets(linha, 120, f);
+          char linha[200];
+         fgets(linha, 200, f);
 
 
         char* tok;
@@ -57,19 +68,19 @@ void importaRegistroParaLista(LISTA** headRef, char arquivo[]) {
            sscanf(tok, "%d", &((newNode->pessoa).matricula));
            tok = strtok(NULL, ",");
 
-           (newNode->pessoa).nome = malloc(sizeof(tok)*10);
+           //(newNode->pessoa).nome = malloc(sizeof(tok)*10);
            strcpy((newNode->pessoa).nome, tok);
            tok = strtok(NULL, ",");
 
-           (newNode->pessoa).sobrenome = malloc(sizeof(tok)*10);
+           //(newNode->pessoa).sobrenome = malloc(sizeof(tok)*10);
            strcpy((newNode->pessoa).sobrenome, tok);
            tok = strtok(NULL, ",");
 
-           (newNode->pessoa).email = malloc(sizeof(tok)*10);
+           //(newNode->pessoa).email = malloc(sizeof(tok)*10);
            strcpy((newNode->pessoa).email, tok);
            tok = strtok(NULL, ",");
 
-           (newNode->pessoa).telefone = malloc(sizeof(tok)*10);
+           //(newNode->pessoa).telefone = malloc(sizeof(tok)*10);
            strcpy((newNode->pessoa).telefone, tok);
            tok = strtok(NULL, ",");
 
@@ -140,7 +151,7 @@ void buscaMatriculaNaLista(LISTA* node) {
 
     if(node->pessoa.matricula == key){
       
-      printf("Os dados de %d sao:\n", node->pessoa.matricula);
+      printf("O registro corresponde a matricula %d eh:\n", node->pessoa.matricula);
       exibeRegistroNaLista(node);
 
       return;
@@ -181,71 +192,14 @@ void deletaMatriculaNaLista(LISTA** headRef) {
 
 }
 
-
-LISTA* criaNovoNoNaLista() {
-
+void insereOrdenadoNaLista(LISTA** headRef, INFO* novoRegistro) {
 
   LISTA* newNode = malloc(sizeof(LISTA));
-
-  if(newNode == NULL){
-    printf("Memoria indisponível.\n");
-    exit(0);
-  }
-
-    printf("Por favor, digite as informacoes solicitadas abaixo\n");
-
-    int matricula;
-    printf("Matricula: ");
-    scanf("%d", &(newNode->pessoa.matricula));
-    getchar();
-
-    char nome[20];
-    printf("Nome: ");
-    fgets(nome, 20, stdin);
-    nome[strcspn(nome, "\n")] = 0;
-    newNode->pessoa.nome = malloc(sizeof(nome)*10);
-    strcpy(newNode->pessoa.nome,nome);
-
-    char sobrenome[20];
-    printf("Sobrenome: ");
-    fgets(sobrenome, 20, stdin);
-    sobrenome[strcspn(sobrenome, "\n")] = 0;
-    newNode->pessoa.sobrenome = malloc(sizeof(sobrenome)*10);
-    strcpy(newNode->pessoa.sobrenome,sobrenome);
-
-
-    char email[30];
-    printf("Email: ");
-    fgets(email, 30, stdin);
-    email[strcspn(email, "\n")] = 0;
-    newNode->pessoa.email = malloc(sizeof(email)*10);
-    strcpy(newNode->pessoa.email,email);
-
-    char telefone[18];
-    printf("Telefone: ");
-    fgets(telefone, 18, stdin);
-    telefone[strcspn(telefone, "\n")] = 0;
-    newNode->pessoa.telefone = malloc(sizeof(telefone)*10);
-    strcpy(newNode->pessoa.telefone,telefone);
-
-    float salario;
-    printf("Salario: ");
-    scanf("%f", &(newNode->pessoa.salario));
-
-    return newNode;
-
-}
-
-
-void insereOrdenadoNaLista(LISTA** headRef){
-
   LISTA* curPtr = (*headRef);
-  LISTA* newNode = criaNovoNoNaLista();
 
-  // verifica se ja existe uma matricula dessa na lista
-  while(curPtr != NULL) {
+   while(curPtr != NULL) {
 
-    if(newNode->pessoa.matricula == curPtr->pessoa.matricula){
+    if(novoRegistro->matricula == curPtr->pessoa.matricula){
       printf("Ja existe um registro com essa matricula na lista.\n");
       return;
     }
@@ -253,6 +207,15 @@ void insereOrdenadoNaLista(LISTA** headRef){
     curPtr = curPtr->proximo;
 
   }
+
+  newNode->proximo = NULL;
+
+  newNode->pessoa.matricula = novoRegistro->matricula;
+  strcpy(newNode->pessoa.nome, novoRegistro->nome);
+  strcpy(newNode->pessoa.sobrenome, novoRegistro->sobrenome);
+  strcpy(newNode->pessoa.email, novoRegistro->email);
+  strcpy(newNode->pessoa.telefone, novoRegistro->telefone);
+  newNode->pessoa.salario = novoRegistro->salario;
 
   curPtr = (*headRef);
 
@@ -271,6 +234,7 @@ void insereOrdenadoNaLista(LISTA** headRef){
 
   append(headRef, newNode);
   return;
+
 
 
 }
