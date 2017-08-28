@@ -64,8 +64,12 @@ void imprimeArvore(ARVORE *root);
 
 void importaRegistroParaArvore(ARVORE** root, char arquivo[]);
 void buscaMatriculaNaArvore(ARVORE* root, int key);
-void buscaNomeNaArvore(ARVORE* root);
+void buscaNomeNaArvore(ARVORE* root, char key[]);
 void exibeRegistroArvore(ARVORE* node);
 void insereOrdenadoNaArvore(ARVORE** rootRef, INFO* novoRegistro);
+int buscaEmOrdem(ARVORE* root, char key[]);
+int buscaPreOrdem(ARVORE* root, char key[]);
+int buscaPosOrdem(ARVORE* root, char key[]);
+
 
 #endif

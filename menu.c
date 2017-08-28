@@ -153,7 +153,7 @@ int main() {
 				switch(subEscolha){
 					case 'a':
 
-						printf("Digite a matricula que deseja buscar: \n");
+						printf("Digite a matricula que deseja buscar: ");
 						scanf("%d", &mat);
 						getchar();
 
@@ -193,8 +193,11 @@ int main() {
 				switch(subEscolha) {
 					case 'a':
 
+						printf("Digite o nome que esta procurando: ");
+						scanf("%s", name);
+
 						tTree = clock();
-						buscaNomeNaArvore(root);
+						buscaNomeNaArvore(root, name);
 						tTree = clock() - tTree;
 
 						tempoArvore = ((double)tTree)/CLOCKS_PER_SEC;
@@ -243,7 +246,7 @@ int main() {
 						scanf("%d", &mat);
 
 						tTree = clock();
-						deleteTreeNode(root, mat);
+						root = deleteTreeNode(root, mat);
 						tTree = clock() - tTree;
 
 						tempoArvore = ((double)tTree)/CLOCKS_PER_SEC;

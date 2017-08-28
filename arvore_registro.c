@@ -107,65 +107,109 @@ void exibeRegistroArvore(ARVORE* node) {
 
 }
 
-
 void buscaMatriculaNaArvore(ARVORE* root, int key){
     
     if (root == NULL){
-    	puts ("Essa matricula nao existe nos registros.");
+        puts ("Essa matricula nao existe nos registros.");
         return;
-	}
+    }
     else if ( key < root->pessoa.matricula ){
-    	
+        
         buscaMatriculaNaArvore(root->esquerda, key);
-	}
+    }
         
     else if( key > root->pessoa.matricula ){
-    	
+        
         buscaMatriculaNaArvore(root->direita, key);
-	}
+    }
     else if (key == root->pessoa.matricula){
-    	printf("O resgitro correspondente a matricula %d eh:\n", key);
-    	exibeRegistroArvore(root);
+        printf("O resgitro correspondente a matricula %d eh:\n", key);
+        exibeRegistroArvore(root);
         return;
-	}
+    }
 }
 
-void buscaNomeNaArvore(ARVORE* root){
 
-    char key[10];
+int buscaEmOrdem(ARVORE* root, char key[]){
 
-    printf("Digite o nome que deseja buscar: ");
-    scanf("%s", key);
 
-    ARVORE* curPtr = root;
-    
-    while(curPtr != NULL){
-    
-       // printf("No atual: %s\n", curPtr->pessoa.nome);
+    if(root != NULL){
 
-        if(strcmp(key, curPtr->pessoa.nome) < 0){
-         //   printf("Indo para a esquerda\n");
-            curPtr = curPtr->esquerda;
-        } else if(strcmp(key, curPtr->pessoa.nome) > 0) {
-           // printf("Indo para a direita\n");
-            curPtr = curPtr->direita;
+        buscaEmOrdem(root->esquerda, key);
+
+        if(strcmp(key, root->pessoa.nome) == 0){
+            printf("Busca em ordem:\n");
+            printf("O registro de %s eh: \n", root->pessoa.nome);
+            exibeRegistroArvore(root);
+            return 1;
         }
 
-        else if(strcmp(key, curPtr->pessoa.nome) == 0){
-            printf("Os dados de %s sao:\n", curPtr->pessoa.nome);
-            exibeRegistroArvore(curPtr);
-            break;
-        }
+        buscaEmOrdem(root->direita, key);
 
 
     }
 
-    printf("%s nao existe nos registros.\n", key);
-    return;
+    return 0;
 
-    
 }
 
+int buscaPreOrdem(ARVORE* root, char key[]){
+
+    if(root != NULL){
+
+        if(strcmp(key, root->pessoa.nome) == 0){
+            printf("Busca pre ordem:\n");
+            printf("O registro de %s eh: \n", root->pessoa.nome);
+            exibeRegistroArvore(root);
+            return 1;
+        }
+
+        buscaPreOrdem(root->esquerda, key);
+        buscaPreOrdem(root->direita, key);
+    }
+
+    return 0;
+
+}
+
+int buscaPosOrdem(ARVORE* root, char key[]){
+
+    if(root != NULL){
+
+        buscaPosOrdem(root->esquerda, key);
+        buscaPosOrdem(root->direita, key);
+
+        if(strcmp(key, root->pessoa.nome) == 0){
+            printf("Busca pos ordem:\n");
+            printf("O registro de %s eh: \n", root->pessoa.nome);
+            exibeRegistroArvore(root);
+            return 1;
+        }
+
+    }
+
+    return 0;
+
+}
+
+void buscaNomeNaArvore(ARVORE* root, char key[]){
+
+    if(buscaPosOrdem(root, key)){
+        return;
+    }
+    else if(buscaPreOrdem(root, key)){
+        return;
+    }
+    else if(buscaEmOrdem(root, key)){
+        return;
+    }
+
+    else
+        printf("%s nao existe nos registros\n", key);
+
+    return;
+    
+}
 
 void insereOrdenadoNaArvore(ARVORE** rootRef, INFO* novoRegistro){
 
