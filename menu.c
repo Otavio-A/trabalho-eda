@@ -49,7 +49,7 @@ void ImportaRegistro(ARVORE** root, LISTA** head) {
 	printf("Total de registros importados: %d\n", quantidadeDeRegistros(arquivo));
 	printf("Tempo de importacao para a arvore: %f segundo(s)\n", tempoTree);
 	printf("Tempo de importacao para a lista duplamente encadeada: %f segundo(s)\n", tempoList);
-	printf("---------------------------------------------------------------------------\n\n");
+	printf("---------------------------------------------------------------------------\n");
 
 }
 

@@ -127,87 +127,36 @@ void buscaMatriculaNaArvore(ARVORE* root, int key){
         exibeRegistroArvore(root);
         return;
     }
+
+    return;
 }
 
+int buscaEmOrdem(ARVORE* node, char key[]){
 
-int buscaEmOrdem(ARVORE* root, char key[]){
+    if( node != NULL ){
 
+        buscaEmOrdem(node->esquerda, key);
 
-    if(root != NULL){
+        if(strcmp(key, node->pessoa.nome) == 0){
 
-        buscaEmOrdem(root->esquerda, key);
+            exibeRegistroArvore(node);
 
-        if(strcmp(key, root->pessoa.nome) == 0){
-            printf("Busca em ordem:\n");
-            printf("O registro de %s eh: \n", root->pessoa.nome);
-            exibeRegistroArvore(root);
-            return 1;
         }
 
-        buscaEmOrdem(root->direita, key);
+        buscaEmOrdem(node->direita, key);
 
 
-    }
-
-    return 0;
-
+   }
 }
 
-int buscaPreOrdem(ARVORE* root, char key[]){
-
-    if(root != NULL){
-
-        if(strcmp(key, root->pessoa.nome) == 0){
-            printf("Busca pre ordem:\n");
-            printf("O registro de %s eh: \n", root->pessoa.nome);
-            exibeRegistroArvore(root);
-            return 1;
-        }
-
-        buscaPreOrdem(root->esquerda, key);
-        buscaPreOrdem(root->direita, key);
-    }
-
-    return 0;
-
-}
-
-int buscaPosOrdem(ARVORE* root, char key[]){
-
-    if(root != NULL){
-
-        buscaPosOrdem(root->esquerda, key);
-        buscaPosOrdem(root->direita, key);
-
-        if(strcmp(key, root->pessoa.nome) == 0){
-            printf("Busca pos ordem:\n");
-            printf("O registro de %s eh: \n", root->pessoa.nome);
-            exibeRegistroArvore(root);
-            return 1;
-        }
-
-    }
-
-    return 0;
-
-}
 
 void buscaNomeNaArvore(ARVORE* root, char key[]){
 
-    if(buscaPosOrdem(root, key)){
-        return;
-    }
-    else if(buscaPreOrdem(root, key)){
-        return;
-    }
-    else if(buscaEmOrdem(root, key)){
-        return;
-    }
+    printf("Registro(s) correspondente(s) ao nome %s: \n", key);
 
-    else
-        printf("%s nao existe nos registros\n", key);
+    buscaEmOrdem(root, key);
 
-    return;
+    printf("\n");
     
 }
 

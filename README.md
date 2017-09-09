@@ -16,7 +16,7 @@ O propósito do projeto é comparar o tempo de cada operação de ambas as estru
 explicar o motivo da diferença do tempo e especificar e o formato de dados utilizados.
 
 O relatório foi feito no formato de artigo, especificado pela Sociedade Brasileira de Computação, e incluem referências a dois
-livros, Introduction to Algorithms(CLRS) e Estruturas De Dados Usando C.
+livros, Algoritmos: Teoria e Prática(CLRS) e Estruturas De Dados Usando C.
 
 
 

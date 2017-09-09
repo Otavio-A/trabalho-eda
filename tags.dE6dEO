@@ -1,0 +1,75 @@
+push	DLL.c	/^void push(LISTA** headRef, LISTA* newNode) {$/;"	f
+deleteNode	DLL.c	/^void deleteNode(LISTA** headRef, LISTA* del) {$/;"	f
+insertAfter	DLL.c	/^void insertAfter(LISTA* prevNode, LISTA* newNode) {$/;"	f
+append	DLL.c	/^void append(LISTA** headRef, LISTA* newNode) {$/;"	f
+imprimeLista	DLL.c	/^void imprimeLista(LISTA* node) {$/;"	f
+altura	AVLTRABALHO3.c	/^int altura(struct Node *N)$/;"	f
+max	AVLTRABALHO3.c	/^int max(int a, int b)$/;"	f
+direitaRotate	AVLTRABALHO3.c	/^ARVORE *direitaRotate(ARVORE *y)$/;"	f
+esquerdaRotate	AVLTRABALHO3.c	/^ARVORE *esquerdaRotate(ARVORE *x)$/;"	f
+getBalance	AVLTRABALHO3.c	/^int getBalance(ARVORE *N)$/;"	f
+insert	AVLTRABALHO3.c	/^ARVORE* insert(ARVORE** node, ARVORE* newNode)$/;"	f
+minValueNode	AVLTRABALHO3.c	/^ARVORE * minValueNode(ARVORE* node)$/;"	f
+deleteTreeNode	AVLTRABALHO3.c	/^ARVORE* deleteTreeNode(ARVORE* root, int matricula){$/;"	f
+imprimeArvore	AVLTRABALHO3.c	/^void imprimeArvore(ARVORE *root){$/;"	f
+quantidadeDeRegistros	menu.c	/^int quantidadeDeRegistros(char arquivo[]) {$/;"	f
+ImportaRegistro	menu.c	/^void ImportaRegistro(ARVORE** root, LISTA** head) {$/;"	f
+insereNovoRegistro	menu.c	/^void insereNovoRegistro(ARVORE** rootRef, LISTA** headRef){$/;"	f
+main	menu.c	/^int main() {$/;"	f
+_GERAL_H	geral.h	2;"	d
+informacoes	geral.h	/^typedef struct informacoes{$/;"	s
+matricula	geral.h	/^    int matricula;$/;"	m	struct:informacoes
+nome	geral.h	/^    char nome[20];$/;"	m	struct:informacoes
+sobrenome	geral.h	/^    char sobrenome[20];$/;"	m	struct:informacoes
+email	geral.h	/^    char email[30];$/;"	m	struct:informacoes
+telefone	geral.h	/^    char telefone[18];$/;"	m	struct:informacoes
+salario	geral.h	/^    float salario;$/;"	m	struct:informacoes
+INFO	geral.h	/^}INFO;$/;"	t	typeref:struct:informacoes
+lista	geral.h	/^typedef struct lista {$/;"	s
+pessoa	geral.h	/^	INFO pessoa;$/;"	m	struct:lista
+proximo	geral.h	/^	struct lista* proximo;$/;"	m	struct:lista	typeref:struct:lista::lista
+anterior	geral.h	/^	struct lista* anterior;$/;"	m	struct:lista	typeref:struct:lista::lista
+LISTA	geral.h	/^}LISTA;$/;"	t	typeref:struct:lista
+push	geral.h	/^void push(LISTA** headRef, LISTA* newNode);$/;"	p
+deleteNode	geral.h	/^void deleteNode(LISTA** headRef, LISTA* del);$/;"	p
+insertAfter	geral.h	/^void insertAfter(LISTA* prevNode, LISTA* newNode);$/;"	p
+append	geral.h	/^void append(LISTA** headRef, LISTA* newNode);$/;"	p
+imprimeLista	geral.h	/^void imprimeLista(LISTA* node);$/;"	p
+importaRegistroParaLista	geral.h	/^void importaRegistroParaLista(LISTA** headRef, char arquivo[]);$/;"	p
+exibeRegistroNaLista	geral.h	/^void exibeRegistroNaLista(LISTA* node);$/;"	p
+deletaMatriculaNaLista	geral.h	/^void deletaMatriculaNaLista(LISTA** headRef);$/;"	p
+buscaMatriculaNaLista	geral.h	/^void buscaMatriculaNaLista(LISTA* node);$/;"	p
+buscaNomeNaLista	geral.h	/^void buscaNomeNaLista(LISTA* node);$/;"	p
+insereOrdenadoNaLista	geral.h	/^void insereOrdenadoNaLista(LISTA** headRef, INFO* novoRegistro);$/;"	p
+Node	geral.h	/^typedef struct Node{$/;"	s
+pessoa	geral.h	/^    INFO pessoa;$/;"	m	struct:Node
+esquerda	geral.h	/^    struct Node *esquerda;$/;"	m	struct:Node	typeref:struct:Node::Node
+direita	geral.h	/^    struct Node *direita;$/;"	m	struct:Node	typeref:struct:Node::Node
+altura	geral.h	/^    int altura;$/;"	m	struct:Node
+ARVORE	geral.h	/^}ARVORE;$/;"	t	typeref:struct:Node
+max	geral.h	/^int max(int a, int b);$/;"	p
+altura	geral.h	/^int altura(struct Node *N);$/;"	p
+direitaRotate	geral.h	/^ARVORE *direitaRotate(ARVORE *y);$/;"	p
+esquerdaRotate	geral.h	/^ARVORE *esquerdaRotate(ARVORE *x);$/;"	p
+getBalance	geral.h	/^int getBalance(ARVORE *N);$/;"	p
+insert	geral.h	/^ARVORE* insert(ARVORE** node, ARVORE* newNode);$/;"	p
+minValueNode	geral.h	/^ARVORE * minValueNode(ARVORE* node);$/;"	p
+deleteTreeNode	geral.h	/^ARVORE* deleteTreeNode(ARVORE* root, int matricula);$/;"	p
+exibeRegistroTree	geral.h	/^void exibeRegistroTree(ARVORE* node);$/;"	p
+imprimeArvore	geral.h	/^void imprimeArvore(ARVORE *root);$/;"	p
+importaRegistroParaArvore	geral.h	/^void importaRegistroParaArvore(ARVORE** root, char arquivo[]);$/;"	p
+buscaMatriculaNaArvore	geral.h	/^void buscaMatriculaNaArvore(ARVORE* root, int key);$/;"	p
+buscaNomeNaArvore	geral.h	/^void buscaNomeNaArvore(ARVORE* root, char key[]);$/;"	p
+exibeRegistroArvore	geral.h	/^void exibeRegistroArvore(ARVORE* node);$/;"	p
+insereOrdenadoNaArvore	geral.h	/^void insereOrdenadoNaArvore(ARVORE** rootRef, INFO* novoRegistro);$/;"	p
+importaRegistroParaArvore	arvore_registro.c	/^void importaRegistroParaArvore(ARVORE** root, char arquivo[]) {$/;"	f
+exibeRegistroArvore	arvore_registro.c	/^void exibeRegistroArvore(ARVORE* node) {$/;"	f
+buscaMatriculaNaArvore	arvore_registro.c	/^void buscaMatriculaNaArvore(ARVORE* root, int key){$/;"	f
+buscaNomeNaArvore	arvore_registro.c	/^void buscaNomeNaArvore(ARVORE* root, char key[]){$/;"	f
+insereOrdenadoNaArvore	arvore_registro.c	/^void insereOrdenadoNaArvore(ARVORE** rootRef, INFO* novoRegistro){$/;"	f
+importaRegistroParaLista	abre_arquivo.c	/^void importaRegistroParaLista(LISTA** headRef, char arquivo[]) {$/;"	f
+exibeRegistroNaLista	abre_arquivo.c	/^void exibeRegistroNaLista(LISTA* curPtr) {$/;"	f
+buscaNomeNaLista	abre_arquivo.c	/^void buscaNomeNaLista(LISTA* node) {$/;"	f
+buscaMatriculaNaLista	abre_arquivo.c	/^void buscaMatriculaNaLista(LISTA* node) {$/;"	f
+deletaMatriculaNaLista	abre_arquivo.c	/^void deletaMatriculaNaLista(LISTA** headRef) {$/;"	f
+insereOrdenadoNaLista	abre_arquivo.c	/^void insereOrdenadoNaLista(LISTA** headRef, INFO* novoRegistro) {$/;"	f

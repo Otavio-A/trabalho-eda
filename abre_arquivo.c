@@ -119,14 +119,12 @@ void buscaNomeNaLista(LISTA* node) {
   printf("Digite o nome que esta procurando: ");
   scanf("%s", key);
 
+  printf("Registro(s) correspondente(s) ao nome %s: \n", key);
   while(node != NULL){
 
     if(strcmp((node->pessoa).nome, key) == 0){
 
-      printf("Os dados de %s sao:\n", node->pessoa.nome);
       exibeRegistroNaLista(node);
-
-      return;
     
     }
 
